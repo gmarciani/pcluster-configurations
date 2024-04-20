@@ -1,0 +1,52 @@
+Region: eu-west-1
+Image:
+  Os: alinux2
+#  CustomAmi: ami-0cb39059892525a58 # aws-parallelcluster-3.5.1-amzn2-hvm-x86_64-202303041220 2023-03-04T12-24-55.856Z
+HeadNode:
+  InstanceType: t3.medium
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+  SlurmQueues:
+    - Name: q1
+      ComputeResources:
+        - Name: t3small
+          InstanceType: t3.small
+          MinCount: 1
+          MaxCount: 10
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+DirectoryService:
+  DomainName: corp.mgiacomo.com
+  DomainAddr: ldap://3.5.106.129,ldap://3.5.153.74
+  PasswordSecretArn: arn:aws:secretsmanager:eu-west-1:319414405305:secret:PasswordSecret-corp-mgiacomo-com-Vid6A7
+  DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=mgiacomo,dc=com
+  LdapTlsReqCert: never
+#  LdapAccessFilter: "!(CN=UserTeamO*)"
+#  LdapAccessFilter: (|(memberOf=CN=TeamTwo,OU=Users,OU=CORP,DC=corp,DC=mgiacomo,DC=com)(memberOf=CN=TeamThree,OU=Users,OU=CORP,DC=corp,DC=mgiacomo,DC=com))
+#  LdapAccessFilter: memberOf=CN=marketing-team,OU=Users,OU=CORP,DC=corp,DC=mgiacomo,DC=com
+  AdditionalSssdConfigs:
+    debug_level: "0xFFF0"
+    cache_credentials: False
+    ldap_auth_disable_tls_never_use_in_production: True
+#    override_homedir: /shared/efs/home/%u
+
+#SharedStorage:
+#  - MountDir: /shared/fsx/managed/1
+#    Name: shared-fsx-managed-1
+#    StorageType: FsxLustre
+#    FsxLustreSettings:
+#      StorageCapacity: 1200

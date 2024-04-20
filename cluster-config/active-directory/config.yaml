@@ -1,0 +1,95 @@
+Region: eu-west-1
+Image:
+  Os: alinux2
+#  CustomAmi: ami-051123f3676b17a08 # aws-parallelcluster-3.9.0-amzn2-hvm-x86_64-202402230021 2024-02-23T00-25-33.902Z
+#  Os: rhel8
+#  CustomAmi: ami-02383b30c29395dfc # aws-parallelcluster-3.9.0-rhel8-hvm-x86_64-202402270022 2024-02-27T00-26-37.800Z
+HeadNode:
+  InstanceType: t3.small
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      - Policy: arn:aws:iam::319414405305:policy/DomainCertificateSecretReadPolicy-corp-mgiacomo-com # Required to read AD certificate
+    S3Access:
+      - BucketName: mgiacomo-workspace
+        EnableWriteAccess: false
+        KeyName: MGIACOMO-AWSParallelCluster/cluster-config/active-directory/ad.head.post.sh
+  CustomActions:
+    OnNodeConfigured:
+      Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/active-directory/ad.head.post.sh
+      Args:
+        - arn:aws:secretsmanager:eu-west-1:319414405305:secret:DomainCertificateSecret-corp-mgiacomo-com-RN4M29
+        - /shared/ebs/managed/1/directory_service/domain-certificate.crt
+LoginNodes:
+  Pools:
+    - Name: login
+      InstanceType: t3.small
+      Count: 1
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Ssh:
+        KeyName: mgiacomo
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      GracetimePeriod: 5
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+    CustomSlurmSettings:
+#      - DebugFlags: Agent,Data,Power,Steps
+      - SlurmctldDebug: debug5
+      - SlurmctldSyslogDebug: debug5
+      - SlurmdDebug: debug5
+      - SlurmdSyslogDebug: debug5
+  SlurmQueues:
+    - Name: q1
+      ComputeResources:
+        - Name: cr1
+          InstanceType: t3.medium
+          MinCount: 2
+          MaxCount: 5
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+DirectoryService:
+  DomainName: corp.mgiacomo.com
+  DomainAddr: ldaps://corp.mgiacomo.com  # ldap://3.5.184.79,ldap://3.5.149.38
+  PasswordSecretArn: arn:aws:secretsmanager:eu-west-1:319414405305:secret:PasswordSecret-corp-mgiacomo-com-4gK4Dp
+#  PasswordSecretArn: arn:aws:ssm:eu-west-1:3194144053055:parameter/corp-mgiacomo-com-password
+  DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=mgiacomo,dc=com
+  LdapTlsCaCert: /shared/ebs/managed/1/directory_service/domain-certificate.crt
+  GenerateSshKeysForUsers: false
+#  LdapAccessFilter: "!(CN=PclusterUser2)"
+#  LdapTlsReqCert: hard # 'never' for LDAP
+#  LdapAccessFilter: "!(CN=UserTeamO*)"
+#  LdapAccessFilter: (|(memberOf=CN=TeamTwo,OU=Users,OU=CORP,DC=corp,DC=mgiacomo,DC=com)(memberOf=CN=TeamThree,OU=Users,OU=CORP,DC=corp,DC=mgiacomo,DC=com))
+#  LdapAccessFilter: memberOf=CN=marketing-team,OU=Users,OU=CORP,DC=corp,DC=mgiacomo,DC=com
+  AdditionalSssdConfigs:
+    debug_level: "0xFFF0"
+    cache_credentials: False
+#    ldap_auth_disable_tls_never_use_in_production: True
+#    override_homedir: /shared/fsx/managed/1/home/%u
+
+SharedStorage:
+  - MountDir: /shared/ebs/managed/1
+    Name: shared-ebs-managed-1
+    StorageType: Ebs
+    EbsSettings:
+      VolumeType: gp3
+      Size: 10
+#DevSettings:
+#  #  AmiSearchFilters:
+#  #    Owner: "447714826191"
+#  Cookbook:
+#    ChefCookbook: s3://mgiacomo-workspace/parallelcluster/3.9.0/cookbooks/ad/aws-parallelcluster-cookbook-3.9.0.tgz
