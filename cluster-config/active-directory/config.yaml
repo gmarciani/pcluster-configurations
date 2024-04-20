@@ -1,16 +1,13 @@
 Region: eu-west-1
 Image:
   Os: alinux2
-#  CustomAmi: ami-051123f3676b17a08 # aws-parallelcluster-3.9.0-amzn2-hvm-x86_64-202402230021 2024-02-23T00-25-33.902Z
-#  Os: rhel8
-#  CustomAmi: ami-02383b30c29395dfc # aws-parallelcluster-3.9.0-rhel8-hvm-x86_64-202402270022 2024-02-27T00-26-37.800Z
 HeadNode:
   InstanceType: t3.small
   Networking:
     SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
   Ssh:
     KeyName: mgiacomo
-    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+    AllowedIps: pl-01a74268
   Iam:
     AdditionalIamPolicies:
       - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
@@ -80,16 +77,3 @@ DirectoryService:
     cache_credentials: False
 #    ldap_auth_disable_tls_never_use_in_production: True
 #    override_homedir: /shared/fsx/managed/1/home/%u
-
-SharedStorage:
-  - MountDir: /shared/ebs/managed/1
-    Name: shared-ebs-managed-1
-    StorageType: Ebs
-    EbsSettings:
-      VolumeType: gp3
-      Size: 10
-#DevSettings:
-#  #  AmiSearchFilters:
-#  #    Owner: "447714826191"
-#  Cookbook:
-#    ChefCookbook: s3://mgiacomo-workspace/parallelcluster/3.9.0/cookbooks/ad/aws-parallelcluster-cookbook-3.9.0.tgz
