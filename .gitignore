@@ -1,0 +1,8 @@
+# General
+.ignore/
+.DS_Store
+*.swp
+
+# IDE
+.idea/
+*.iml
