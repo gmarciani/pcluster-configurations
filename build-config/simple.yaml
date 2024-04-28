@@ -1,0 +1,10 @@
+Image:
+  Name: mgiacomo-simple-380
+  RootVolume:
+    Size: 50
+Build:
+  InstanceType: g4dn.8xlarge  # g4dn.8xlarge (x86_64), g5g.2xlarge (arm64), p3.2xlarge, c6g.2xlarge (arm64)
+  ParentImage: ami-066e01ca94469d192 # aws-parallelcluster-3.8.0-amzn2-hvm-x86_64-202312140141 2023-12-14T01-45-18.923Z
+  SecurityGroupIds:
+    - sg-0ae2798bd9c862add # DevWorkspaceVPC/SSH-Secure (IAD)
+  SubnetId: subnet-0147896c0e16103ae # DevWorkspaceVPC/IAD1/Public
