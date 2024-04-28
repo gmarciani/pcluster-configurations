@@ -1,0 +1,10 @@
+DevSettings:
+  AmiSearchFilters:
+    Owner: "447714826191"
+      Tags:
+      - Key: "parallelcluster:image_name"
+        Value: "aws-parallelcluster-3.1.0b1-amzn2-hvm-arm64-202201171024"
+  Cookbook:
+    ChefCookbook: s3://mgiacomo-workspace/parallelcluster/3.5.0/cookbooks/aws-parallelcluster-cookbook-3.5.0.tgz
+    ExtraChefAttributes: '{ "cluster" : { "skip_install_recipes" : "no" } }'
+  NodePackage: s3://aws-parallelcluster-mgiacomo/parallelcluster/3.2.0/node/aws-parallelcluster-node-3.2.0.tgz
