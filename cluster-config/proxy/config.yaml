@@ -1,0 +1,34 @@
+Region: eu-west-1
+Image:
+  Os: alinux2
+HeadNode:
+  InstanceType: t3.medium
+  Networking:
+    SubnetId: subnet-0ea1d8b04072db9d7 # ProxyVPC/Private
+    Proxy:
+      HttpProxyAddress: http://10.1.0.16:8888
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+  SlurmQueues:
+    - Name: q1
+      ComputeResources:
+        - Name: cr1
+          InstanceType: t3.small
+          MinCount: 1
+          MaxCount: 5
+      Networking:
+        SubnetIds:
+          - subnet-0ea1d8b04072db9d7 # ProxyVPC/Private
+        Proxy:
+          HttpProxyAddress: http://10.1.0.16:8888
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
