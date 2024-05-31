@@ -1,0 +1,38 @@
+Region: eu-west-1
+Image:
+#  Os: alinux2
+#  Os: ubuntu2204
+  Os: centos7
+HeadNode:
+  InstanceType: g4dn.8xlarge
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-60b85b09 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: q1
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+        PlacementGroup:
+          Enabled: false
+      ComputeResources:
+        - Name: efa-enabled
+          InstanceType: g4dn.8xlarge
+          MinCount: 2
+          MaxCount: 2
+          DisableSimultaneousMultithreading: true
+          Efa:
+            Enabled: true
+DevSettings:
+  AmiSearchFilters:
+    Owner: "447714826191"
