@@ -1,0 +1,45 @@
+Region: eu-west-1
+Image:
+  Os: alinux2
+HeadNode:
+  InstanceType: t3.medium
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-60b85b09 - com.amazonaws.firewall.regional-corp-only
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+#    CustomSlurmSettings:
+#      - TreeWidth: 65535
+  SlurmQueues:
+    - Name: q1
+      ComputeResources:
+        - Name: cr1
+          InstanceType: m6a.2xlarge
+          MinCount: 1
+          MaxCount: 5
+          CustomSlurmSettings:
+            ThreadsPerCore: 2
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+SharedStorage:
+  - MountDir: /opt/shared/ebs/managed/1
+    Name: shared-ebs-managed-1
+    StorageType: Ebs
+    EbsSettings:
+      DeletionPolicy: Delete
+Tags:
+  - Key: scope
+    Value: mgiacomo-test
