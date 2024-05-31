@@ -1,0 +1,74 @@
+Region: eu-west-1
+Image:
+  Os: alinux2
+HeadNode:
+  InstanceType: t3.small
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+    AdditionalSecurityGroups:
+      - sg-0d72ef3d4a7ecdcf0  # Required to allow SSH from the Kerberos client instance having the same SG
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+  CustomActions:
+    OnNodeConfigured:
+      Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/kerberos/head.post.sh
+      Args:
+        - "corp.mgiacomo3.com"
+        - "3.5.6.36,3.5.59.191"
+        - "Admin"
+        - "p@ssw0rd"
+LoginNodes:
+  Pools:
+    - Name: login
+      InstanceType: t3.small
+      Count: 2
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+        AdditionalSecurityGroups:
+          - sg-0d72ef3d4a7ecdcf0  # Required to allow SSH from the Kerberos client instance having the same SG
+      Ssh:
+        KeyName: mgiacomo
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+      GracetimePeriod: 5
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+    Dns:
+      DisableManagedDns: true
+      UseEc2Hostnames: true
+  SlurmQueues:
+    - Name: q1
+      ComputeResources:
+        - Name: cr1
+          InstanceType: t3.small
+          MinCount: 1
+          MaxCount: 5
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+SharedStorage:
+  - MountDir: /opt/shared/ebs/managed/1
+    Name: shared-ebs-managed-1
+    StorageType: Ebs
+    EbsSettings:
+      DeletionPolicy: Delete
+Tags:
+  - Key: scope
+    Value: mgiacomo-test
+DevSettings:
+  AmiSearchFilters:
+    Owner: "447714826191"
