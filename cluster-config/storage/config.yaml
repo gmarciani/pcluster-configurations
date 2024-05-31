@@ -1,0 +1,174 @@
+Region: eu-west-1
+Image:
+  Os: alinux2
+  CustomAmi: ami-0e0cf3d543a824094  # aws-parallelcluster-3.9.0-amzn2-hvm-x86_64-202402290021 2024-02-29T00-25-22.679Z
+HeadNode:
+  InstanceType: t3.medium
+  Networking:
+      SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+#    S3Access:
+#      - BucketName: mgiacomo-workspace
+#        EnableWriteAccess: false
+#        KeyName: MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/install-software.sh
+#  CustomActions:
+#    OnNodeConfigured:
+#      Sequence:
+#        - Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/install-software.sh
+  SharedStorageType: Ebs
+LoginNodes:
+  Pools:
+    - Name: login
+      InstanceType: t3.small
+      Count: 2
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Ssh:
+        KeyName: mgiacomo
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      GracetimePeriod: 60
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN # TERMINATE|DRAIN|RECYCLE_ON_IDLE
+  SlurmQueues:
+  - Name: q1
+    ComputeResources:
+      - Name: cr1
+        Instances:
+          - InstanceType: t3.micro
+#          - InstanceType: c5.large # m6g.medium
+#          - InstanceType: m5.large # c6g.medium
+#          - InstanceType: t3.large # r6g.medium
+#          - InstanceType: c5.large # m6g.medium
+#          - InstanceType: m5.large # c6g.medium
+        MinCount: 1
+        MaxCount: 10
+    Networking:
+      SubnetIds:
+       - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    Iam:
+      AdditionalIamPolicies:
+        - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+#      S3Access:
+#        - BucketName: mgiacomo-workspace
+#          EnableWriteAccess: false
+#          KeyName: MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/install-software.sh
+#    CustomActions:
+#      OnNodeConfigured:
+#        Sequence:
+#          - Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/install-software.sh
+  - Name: q2
+    ComputeResources:
+      - Name: cr2
+        Instances:
+          - InstanceType: t3.large # r6g.medium
+          - InstanceType: c5.large # m6g.medium
+          - InstanceType: m5.large # c6g.medium
+        MinCount: 1
+        MaxCount: 10
+    Networking:
+      SubnetIds:
+        - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    Iam:
+      InstanceRole: arn:aws:iam::319414405305:role/AdminRole
+#    CustomActions:
+#      OnNodeConfigured:
+#        Sequence:
+#          - Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/install-software.sh
+  - Name: q3
+    ComputeResources:
+      - Name: cr3
+        Instances:
+          - InstanceType: t3.large # r6g.medium
+          - InstanceType: c5.large # m6g.medium
+          - InstanceType: m5.large # c6g.medium
+        MinCount: 1
+        MaxCount: 10
+    Networking:
+      SubnetIds:
+        - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    Iam:
+      InstanceProfile: arn:aws:iam::319414405305:instance-profile/AdminRole2
+#    CustomActions:
+#      OnNodeConfigured:
+#        Sequence:
+#          - Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/install-software.sh
+#SharedStorage:
+##   Managed EBS
+#  - MountDir: /opt/shared/ebs/managed/1
+#    Name: shared-ebs-managed-1
+#    StorageType: Ebs
+#    EbsSettings:
+#      DeletionPolicy: Delete
+#  # External EBS
+#  - MountDir: /opt/shared/ebs/external/1
+#    Name: shared-ebs-external-1
+#    StorageType: Ebs
+#    EbsSettings:
+#      VolumeId: vol-04cb71c8b6fca4966
+  # Managed EFS
+#  - MountDir: /home
+#    Name: home-managed
+#    StorageType: Efs
+#    EfsSettings:
+#      DeletionPolicy: Delete
+#  - MountDir: /opt/shared/efs/managed/1
+#    Name: shared-efs-managed-1
+#    StorageType: Efs
+#    EfsSettings:
+#      DeletionPolicy: Delete
+#  # External EFS
+#  - MountDir: /opt/shared/efs/external/1
+#    Name: shared-efs-external-1
+#    StorageType: Efs
+#    EfsSettings:
+#      FileSystemId: fs-0f583af3c7e87e63c
+#  # Managed FSxLustre
+#  - MountDir: /opt/shared/fsxlustre/managed/1
+#    Name: shared-fsxlustre-managed-1
+#    StorageType: FsxLustre
+#    FsxLustreSettings:
+#      StorageCapacity: 1200
+#      DeletionPolicy: Delete
+#  # External FSx Lustre
+#  - MountDir: /opt/shared/fsxlustre/external/1
+#    Name: shared-fsxlustre-external-2
+#    StorageType: FsxLustre
+#    FsxLustreSettings:
+#      FileSystemId: fs-0a0dbcb1d57bbf086
+#  # External FSx ONTAP
+#  - MountDir: /opt/shared/fsxontap/external/1
+#    Name: shared-fsxontap-external-1
+#    StorageType: FsxOntap
+#    FsxOntapSettings:
+#      VolumeId: fsvol-02eb7a51d22fd4f47
+#  # External FSx OpenZFS
+#  - MountDir: /opt/shared/fsxopenzfs/external/1
+#    Name: shared-fsxopenzfs-external-1
+#    StorageType: FsxOpenZfs
+#    FsxOpenZfsSettings:
+#      VolumeId: fsvol-0dc5d97b107c8ec30
+#  # External FileCache
+#  - MountDir: /opt/shared/fsxcache/external/1
+#    Name: shared-fsxcache-external-1
+#    StorageType: FileCache
+#    FileCacheSettings:
+#      FileCacheId: fc-0e52eb126566208d9
+#Monitoring:
+#  Logs:
+#    CloudWatch:
+#      DeletionPolicy: Delete  # Retain
+DevSettings:
+#  AmiSearchFilters:
+#    Owner: "447714826191"
+  Cookbook:
+    ChefCookbook: s3://mgiacomo-workspace/parallelcluster/3.9.0/cookbooks/scaling/aws-parallelcluster-cookbook-3.9.0.tgz

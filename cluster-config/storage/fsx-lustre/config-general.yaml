@@ -1,0 +1,45 @@
+Region: XXXXXXXXXX
+Image:
+  Os: alinux2
+  CustomAmi: ami-XXXXXXXXXX
+HeadNode:
+  InstanceType: t3.medium
+  Networking:
+      SubnetId: subnet-XXXXXXXXXX # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: XXXXXXXXXX
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:XXXXXXXXXX:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN # TERMINATE|DRAIN|RECYCLE_ON_IDLE
+  SlurmQueues:
+  - Name: q1
+    ComputeResources:
+      - Name: cr1
+        Instances:
+          - InstanceType: t3.medium
+        MinCount: 1
+        MaxCount: 10
+    Networking:
+      SubnetIds:
+       - subnet-XXXXXXXXXX # DevWorkspaceVPC/DUB2/Private
+    Iam:
+      AdditionalIamPolicies:
+        - Policy: arn:XXXXXXXXXX:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+SharedStorage:
+  # Managed FSxLustre
+  - MountDir: /opt/shared/fsxlustre/managed/1
+    Name: shared-fsxlustre-managed-1
+    StorageType: FsxLustre
+    FsxLustreSettings:
+      StorageCapacity: 1200
+      DeletionPolicy: Delete
+  # External FSx Lustre
+  - MountDir: /opt/shared/fsxlustre/external/1
+    Name: shared-fsxlustre-external-2
+    StorageType: FsxLustre
+    FsxLustreSettings:
+      FileSystemId: fs-XXXXXXXXXX
