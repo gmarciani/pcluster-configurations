@@ -1,0 +1,55 @@
+Region: eu-west-1
+Image:
+  Os: alinux2
+  CustomAmi: ami-0ddf07be4bb7aefab
+HeadNode:
+  InstanceType: t3.medium
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+#    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: q1
+      CapacityType: ONDEMAND # or ONDEMAND|SPOT
+      AllocationStrategy: lowest-price  # lowest-price|capacity-optimized
+      ComputeResources:
+        - Name: cr1
+          Instances:
+            - InstanceType: t3.large # r6g.medium
+            - InstanceType: c5.large # m6g.medium
+            - InstanceType: m5.large # c6g.medium
+          MinCount: 1
+          MaxCount: 5
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      Image:
+        CustomAmi: ami-0ddf07be4bb7aefab
+#    - Name: q2
+#      CapacityType: ONDEMAND # or ONDEMAND|SPOT
+#      AllocationStrategy: lowest-price  # lowest-price|capacity-optimized
+#      ComputeResources:
+#        - Name: cr1
+#          Instances:
+#            - InstanceType: c5.large # m6g.medium
+#            - InstanceType: c5.xlarge # m6g.large
+#          MinCount: 1
+#          MaxCount: 5
+#      Networking:
+#        SubnetIds:
+#          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+#      Iam:
+#        AdditionalIamPolicies:
+#          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+#DevSettings:
+#  AmiSearchFilters:
+#    Owner: "447714826191"
