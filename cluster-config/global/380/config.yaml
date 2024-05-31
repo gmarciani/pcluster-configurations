@@ -1,0 +1,111 @@
+Region: eu-west-1
+Image:
+  Os: ubuntu2204
+HeadNode:
+  InstanceType: t3.small
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+    AdditionalSecurityGroups:
+      - sg-0baa5198d8065d81a # SlurmDB Client Security Group
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+    S3Access:
+      - BucketName: mgiacomo-workspace-eu-west-1
+        EnableWriteAccess: false
+  SharedStorageType: Efs
+LoginNodes:
+  Pools:
+    - Name: login
+      InstanceType: t3.small
+      Count: 1
+      Networking:
+        SubnetIds:
+          - subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+      Ssh:
+        KeyName: mgiacomo
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+      GracetimePeriod: 5
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+    EnableMemoryBasedScheduling: true
+    MungeKeySecretArn: arn:aws:secretsmanager:eu-west-1:319414405305:secret:MungeKey-2Amx29
+    Database:
+      Uri: slurm-accounting-cluster.cluster-czkhokbphvly.eu-west-1.rds.amazonaws.com:3306
+      UserName: clusteradmin
+      PasswordSecretArn: arn:aws:secretsmanager:eu-west-1:319414405305:secret:AccountingClusterAdminSecre-DkVISfmtTGT5-NrXBzI
+      DatabaseName: mgiacomodb
+  SlurmQueues:
+    - Name: q1
+      CapacityType: ONDEMAND
+      ComputeResources:
+        - Name: t3medium
+          Instances:
+            - InstanceType: t3.large # r6g.medium
+            - InstanceType: c5.large # m6g.medium
+            - InstanceType: m5.large # c6g.medium
+          MinCount: 2
+          MaxCount: 5
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+        S3Access:
+          - BucketName: mgiacomo-workspace-eu-west-1
+            EnableWriteAccess: false
+      JobExclusiveAllocation: true
+#    - Name: q2
+#      CapacityType: CAPACITY_BLOCK
+#      ComputeResources:
+#        - Name: c5n18xl
+#          Instances:
+#            - InstanceType: c5n.18xlarge
+#          MinCount: 1
+#          MaxCount: 1
+#          CapacityReservationTarget:
+#            CapacityReservationId: cr-0d1df33964fc7c38a
+#      Networking:
+#        SubnetIds:
+#        - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+#      Iam:
+#        AdditionalIamPolicies:
+#          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+#          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+#        S3Access:
+#          - BucketName: mgiacomo-workspace-us-east-1
+#            EnableWriteAccess: false
+#      JobExclusiveAllocation: true
+SharedStorage:
+  - MountDir: /opt/shared/fsxlustre/managed/1
+    Name: shared-fsxlustre-managed-1
+    StorageType: FsxLustre
+    FsxLustreSettings:
+      StorageCapacity: 1200
+      DeletionPolicy: Delete
+      DataRepositoryAssociations:
+        - Name: dra
+          BatchImportMetaDataOnCreate: True
+          DataRepositoryPath: s3://mgiacomo-workspace-eu-west-1/tests/storage/fsx-lustre-dra
+          FileSystemPath: /fsx-lustre-dra
+          ImportedFileChunkSize: 1024
+          AutoExportPolicy: [ NEW, CHANGED, DELETED ]
+          AutoImportPolicy: [ NEW, CHANGED ]
+Monitoring:
+  Alarms:
+    Enabled: true
+
+DevSettings:
+  AmiSearchFilters:
+    Owner: "447714826191"

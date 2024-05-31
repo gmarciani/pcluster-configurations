@@ -1,0 +1,55 @@
+Region: eu-west-1
+Image:
+  Os: ubuntu2204
+HeadNode:
+  InstanceType: t3.small
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+LoginNodes:
+  Pools:
+    - Name: login
+      InstanceType: t3.small
+      Count: 1
+      Networking:
+        SubnetIds:
+          - subnet-040ba48340c0708d4 # DevWorkspaceVPC/DUB2/Public
+      Ssh:
+        KeyName: mgiacomo
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      GracetimePeriod: 5
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+    EnableMemoryBasedScheduling: true
+  SlurmQueues:
+    - Name: q1
+      ComputeResources:
+        - Name: t3medium
+          Instances:
+            - InstanceType: t3.large # r6g.medium
+            - InstanceType: c5.large # m6g.medium
+            - InstanceType: m5.large # c6g.medium
+          MinCount: 2
+          MaxCount: 5
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      JobExclusiveAllocation: true
+SharedStorage:
+  - MountDir: /opt/shared/filecache/external/1
+    Name: shared-file-cache-external-1
+    StorageType: FileCache
+    FileCacheSettings:
+      FileCacheId: fc-0bdd64a9ee1a6cf3c
