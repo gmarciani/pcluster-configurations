@@ -1,0 +1,48 @@
+Region: eu-west-1
+Image:
+  Os: alinux2
+HeadNode:
+  InstanceType: t2.medium
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+  LocalStorage:
+    RootVolume:
+      Size: 50
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+  SlurmQueues:
+    - Name: cr1
+      ComputeResources:
+        - Name: t2small
+          InstanceType: t2.small
+          MinCount: 1
+          MaxCount: 5
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Size: 70
+SharedStorage:
+  - MountDir: /opt/shared/ebs/managed/1
+    Name: shared-ebs-managed-1
+    StorageType: Ebs
+    EbsSettings:
+      DeletionPolicy: Delete
+DevSettings:
+  AmiSearchFilters:
+    Owner: "447714826191"
