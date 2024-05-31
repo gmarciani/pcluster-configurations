@@ -21,11 +21,10 @@ Scheduling:
   SlurmSettings:
     QueueUpdateStrategy: DRAIN
   SlurmQueues:
-    - Name: cr1
+    - Name: q1
       ComputeResources:
-        - Name: t3small
-          Instances:
-            - InstanceType: t3.small
+        - Name: cr1
+          InstanceType: t3.small
           MinCount: 1
           MaxCount: 5
       Networking:
@@ -33,4 +32,7 @@ Scheduling:
           - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
       Iam:
         AdditionalIamPolicies:
-          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+Tags:
+  - Key: owner
+    Value: giacomo-marciani
