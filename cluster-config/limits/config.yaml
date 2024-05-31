@@ -1,0 +1,871 @@
+Image:
+  CustomAmi: ami-00117a1a3c2ebe055 # aws-parallelcluster-3.9.0-amzn2-hvm-x86_64-202402091550 2024-02-09T15-54-55.254Z
+  Os: alinux2
+Imds:
+  ImdsSupport: v2.0
+HeadNode:
+  Iam:
+    AdditionalIamPolicies: &id001
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  InstanceType: c5.xlarge
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-0-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-0
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-1-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-1
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-2-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-2
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-3-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-3
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-4-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-4
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-5-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-5
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-6-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-6
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-7-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-7
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-8-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-8
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-9-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-9
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-10-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-10
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-11-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-11
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-12-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-12
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-13-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-13
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-14-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-14
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-15-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-15
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-16-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-16
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-17-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-17
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-18-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-18
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-19-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-19
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-20-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-20
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-21-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-21
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-22-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-22
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-23-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-23
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-24-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-24
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-25-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-25
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-26-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-26
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-27-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-27
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-28-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-28
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-29-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-29
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-30-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-30
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-31-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-31
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-32-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-32
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-33-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-33
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-34-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-34
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-35-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-35
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-36-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-36
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-37-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-37
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-38-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-38
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-39-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-39
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-40-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-40
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-41-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-41
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-42-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-42
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-43-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-43
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-44-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-44
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-45-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-45
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-46-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-46
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-47-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-47
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-48-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-48
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+    - ComputeResources:
+        - Instances:
+            - InstanceType: c5.xlarge
+          MaxCount: 16
+          MinCount: 0
+          Name: queue-49-cr
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+      Iam:
+        AdditionalIamPolicies: 
+           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Name: queue-49
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+Tags:
+  - Key: inside_configuration_key
+    Value: overridden
+DevSettings:
+  Cookbook:
+    ChefCookbook: s3://mgiacomo-workspace/parallelcluster/3.9.0/cookbooks/aws-parallelcluster-cookbook-3.9.0.tgz
