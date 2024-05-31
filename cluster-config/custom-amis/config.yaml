@@ -1,0 +1,68 @@
+Region: eu-west-1
+Image:
+  Os: alinux2
+#  CustomAmi: ami-0b8663c01b4dac319 # mgiacomo-pc380-spack-2023-10-25-4 2023-10-25T12-41-20.066Z
+#Iam:
+#  ResourcePrefix: "aaaaaaaaaa"
+#  PermissionsBoundary: "arn:aws:iam::319414405305:policy/AdminPermissionsBoundary"
+HeadNode:
+  InstanceType: t3.medium
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+#    AllowedIps: pl-01a74268 # pl-60b85b09 - com.amazonaws.firewall.regional-corp-only
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+#  CustomActions:
+#    OnNodeConfigured:
+#      Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/simple/head.post.sh
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+  SlurmQueues:
+    - Name: q1
+      ComputeResources:
+        - Name: cr1
+          InstanceType: t3.small
+          MinCount: 1
+          MaxCount: 5
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+      Image:
+        CustomAmi: ami-0ebe3f5825054290f  # aws-parallelcluster-3.8.0-ubuntu-2004-lts-hvm-x86_64-202312160956 2023-12-16T10-00-09.890Z
+    - Name: q2
+      ComputeResources:
+        - Name: cr1
+          InstanceType: t3.small
+          MinCount: 1
+          MaxCount: 5
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+      Image:
+        CustomAmi: ami-0749bb5176e926661  # aws-parallelcluster-3.8.0-ubuntu-2204-lts-hvm-x86_64-202312160956 2023-12-16T10-00-45.861Z
+#SharedStorage:
+#  - MountDir: /opt/shared/ebs/managed/1
+#    Name: shared-ebs-managed-1
+#    StorageType: Ebs
+#    EbsSettings:
+#      DeletionPolicy: Delete
+Tags:
+  - Key: scope
+    Value: mgiacomo-test
+#DevSettings:
+#  AmiSearchFilters:
+#    Owner: "447714826191"
