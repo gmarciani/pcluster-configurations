@@ -1,0 +1,121 @@
+Region: eu-west-1
+Image:
+  Os: alinux2
+CustomS3Bucket: mgiacomo-pcluster-custom-bucket
+HeadNode:
+  InstanceType: t3.small
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23
+#    AdditionalSecurityGroups:
+#      - sg-08305b8161617f2b5 # FSXOntap-Secure
+#      - sg-043e9fcaade8f85bb # FSXOpenZfs-Secure
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+#      - Policy: arn:aws:iam::aws:policy/AmazonS3FullAccess # Required to have read/write access to the S3 bucket backing FSxFileCache
+#      - Policy: arn:aws:iam::319414405305:policy/DomainCertificateSecretReadPolicy-corp-mgiacomo-com # Required to read AD certificate
+#  CustomActions:
+#    OnNodeConfigured:
+#      Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/active-directory/ad.head.post.sh
+#      Args:
+#        - arn:aws:secretsmanager:eu-west-1:319414405305:secret:DomainCertificateSecret-corp-mgiacomo-com-khPcdD
+#        - /opt/parallelcluster/shared/directory_service/domain-certificate.crt
+LoginNodes:
+  Pools:
+    - Name: login
+      InstanceType: t3.small
+      Count: 1
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+#        AdditionalSecurityGroups:
+#          - sg-08305b8161617f2b5 # FSXOntap-Secure
+#          - sg-043e9fcaade8f85bb # FSXOpenZfs-Secure
+      Ssh:
+        KeyName: mgiacomo
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+#          - Policy: arn:aws:iam::aws:policy/AmazonS3FullAccess # Required to have read/write access to the S3 bucket backing FSxFileCache
+      GracetimePeriod: 3
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+  SlurmQueues:
+    - Name: q1
+      ComputeResources:
+        - Name: cr1
+          Instances:
+            - InstanceType: t3.large # r6g.medium
+            - InstanceType: c5.large # m6g.medium
+            - InstanceType: m5.large # c6g.medium
+          MinCount: 1
+          MaxCount: 10
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+#DirectoryService:
+#  DomainName: corp.mgiacomo.com
+#  DomainAddr: ldaps://corp.mgiacomo.com  # ldap://3.5.184.79,ldap://3.5.149.38
+#  PasswordSecretArn: arn:aws:secretsmanager:eu-west-1:319414405305:secret:PasswordSecret-corp-mgiacomo-com-Vid6A7
+#  DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=mgiacomo,dc=com
+##  LdapTlsCaCert: /opt/parallelcluster/shared/directory_service/domain-certificate.crt
+#  LdapTlsReqCert: never
+#  AdditionalSssdConfigs:
+#    debug_level: "0xFFF0"
+#    cache_credentials: False
+##    ldap_auth_disable_tls_never_use_in_production: True
+#SharedStorage:
+#  - MountDir: /opt/shared/ebs/managed/1
+#    Name: shared-ebs-managed-1
+#    StorageType: Ebs
+#  - MountDir: /opt/shared/ebs/external/1
+#    Name: shared-ebs-external-1
+#    StorageType: Ebs
+#    EbsSettings:
+#      VolumeId: vol-0b1b6a87f8769077c
+#  - MountDir: /opt/shared/efs/managed/1
+#    Name: shared-efs-managed-1
+#    StorageType: Efs
+#  - MountDir: /opt/shared/efs/external/1
+#    Name: shared-efs-external-1
+#    StorageType: Efs
+#    EfsSettings:
+#      FileSystemId: fs-00bdafeedfdc2d7b5
+#  - MountDir: /opt/shared/fsxlustre/managed/1
+#    Name: shared-fsxlustre-managed-1
+#    StorageType: FsxLustre
+#    FsxLustreSettings:
+#      StorageCapacity: 1200
+#  - MountDir: /opt/shared/fsxlustre/external/1
+#    Name: shared-fsxlustre-external-1
+#    StorageType: FsxLustre
+#    FsxLustreSettings:
+#      FileSystemId: fs-00f54fced5ad37009
+#  - MountDir: /opt/shared/fsxontap/external/2
+#    Name: shared-fsxontap-external-2
+#    StorageType: FsxOntap
+#    FsxOntapSettings:
+#      VolumeId: fsvol-0e01282e1fe1dd93d
+#  - MountDir: /opt/shared/fsxopenzfs/external/1
+#    Name: shared-fsxopenzfs-external-1
+#    StorageType: FsxOpenZfs
+#    FsxOpenZfsSettings:
+#      VolumeId: fsvol-0278d6ee5786a4891
+#  - MountDir: /opt/shared/fsxcache/external/1
+#    Name: shared-fsxcache-external-1
+#    StorageType: FsxFileCache
+#    FsxFileCacheSettings:
+#      FileCacheId: fc-0f664578e9375d009
+#DevSettings:
+#  AmiSearchFilters:
+#    Owner: "447714826191"
+#  Cookbook:
+#    ChefCookbook: s3://mgiacomo-workspace/parallelcluster/3.7.0/cookbooks/aws-parallelcluster-cookbook-3.9.0.tgz
