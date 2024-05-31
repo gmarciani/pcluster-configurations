@@ -1,0 +1,42 @@
+# MultiNICs instance types: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI
+Region: eu-west-1
+Image:
+  Os: alinux2
+  CustomAmi: ami-05f1e1dfa0f9f853d
+HeadNode:
+  InstanceType: p4d.24xlarge # c6in.metal
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+  SlurmQueues:
+    - Name: cr1
+      ComputeResources:
+        - Name: p4d24xl # c6inm
+          InstanceType: p4d.24xlarge # c6in.metal
+          MinCount: 1
+          MaxCount: 5
+          CapacityReservationTarget:
+            CapacityReservationId: cr-0fc8faa6d1fb1397e
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+Tags:
+  - Key: scope
+    Value: mgiacomo-test
+DevSettings:
+  AmiSearchFilters:
+    Owner: "447714826191"
