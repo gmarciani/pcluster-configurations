@@ -20,7 +20,7 @@ HeadNode:
     OnNodeConfigured:
       Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/active-directory/ad.head.post.sh
       Args:
-        - arn:aws:secretsmanager:eu-west-1:319414405305:secret:DomainCertificateSecret-corp-mgiacomo-com-RN4M29
+        - arn:aws:secretsmanager:eu-west-1:319414405305:secret:DomainCertificateSecret-corp-mgiacomo-com-hwR963
         - /shared/ebs/managed/1/directory_service/domain-certificate.crt
 LoginNodes:
   Pools:
@@ -40,12 +40,12 @@ Scheduling:
   Scheduler: slurm
   SlurmSettings:
     QueueUpdateStrategy: DRAIN
-    CustomSlurmSettings:
+#    CustomSlurmSettings:
 #      - DebugFlags: Agent,Data,Power,Steps
-      - SlurmctldDebug: debug5
-      - SlurmctldSyslogDebug: debug5
-      - SlurmdDebug: debug5
-      - SlurmdSyslogDebug: debug5
+#      - SlurmctldDebug: debug5
+#      - SlurmctldSyslogDebug: debug5
+#      - SlurmdDebug: debug5
+#      - SlurmdSyslogDebug: debug5
   SlurmQueues:
     - Name: q1
       ComputeResources:
@@ -62,7 +62,7 @@ Scheduling:
 DirectoryService:
   DomainName: corp.mgiacomo.com
   DomainAddr: ldaps://corp.mgiacomo.com  # ldap://3.5.184.79,ldap://3.5.149.38
-  PasswordSecretArn: arn:aws:secretsmanager:eu-west-1:319414405305:secret:PasswordSecret-corp-mgiacomo-com-4gK4Dp
+  PasswordSecretArn: arn:aws:secretsmanager:eu-west-1:319414405305:secret:PasswordSecret-corp-mgiacomo-com-97wG2n
 #  PasswordSecretArn: arn:aws:ssm:eu-west-1:3194144053055:parameter/corp-mgiacomo-com-password
   DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=mgiacomo,dc=com
   LdapTlsCaCert: /shared/ebs/managed/1/directory_service/domain-certificate.crt
@@ -77,3 +77,6 @@ DirectoryService:
     cache_credentials: False
 #    ldap_auth_disable_tls_never_use_in_production: True
 #    override_homedir: /shared/fsx/managed/1/home/%u
+DevSettings:
+  AmiSearchFilters:
+    Owner: "447714826191"
