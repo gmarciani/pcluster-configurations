@@ -1,0 +1,79 @@
+Region: eu-west-1
+Image:
+  Os: alinux2
+HeadNode:
+  InstanceType: t2.medium
+  Networking:
+    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: q1
+      ComputeResources:
+        - Name: open-single
+          InstanceType: r5.xlarge
+          MinCount: 1
+          MaxCount: 2
+          CapacityReservationTarget:
+            CapacityReservationId: cr-077dd49c78ac91d19
+      Networking:
+        SubnetIds:
+           - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+    - Name: q2
+      ComputeResources:
+        - Name: open-multi
+          Instances:
+            - InstanceType: r5.xlarge
+          MinCount: 1
+          MaxCount: 2
+          CapacityReservationTarget:
+            CapacityReservationResourceGroupArn: arn:aws:resource-groups:eu-west-1:319414405305:group/pcluster-adc-odcr-3
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-04cf1da8b777cd827 # DevWorkspaceVPC/DUB8/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+    - Name: q3
+      ComputeResources:
+        - Name: targeted-single
+          InstanceType: r5.xlarge
+          MinCount: 1
+          MaxCount: 2
+          CapacityReservationTarget:
+            CapacityReservationId: cr-03a91ba54538adc49
+          Networking:
+            PlacementGroup:
+              Enabled: true
+      Networking:
+        SubnetIds:
+          - subnet-04cf1da8b777cd827 # DevWorkspaceVPC/DUB8/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+    - Name: q4
+      ComputeResources:
+        - Name: targeted-multi
+          Instances:
+            - InstanceType: r5.xlarge
+          MinCount: 1
+          MaxCount: 2
+          CapacityReservationTarget:
+            CapacityReservationResourceGroupArn: arn:aws:resource-groups:eu-west-1:319414405305:group/pcluster-adc-odcr-3
+      Networking:
+        SubnetIds:
+          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-04cf1da8b777cd827 # DevWorkspaceVPC/DUB8/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
