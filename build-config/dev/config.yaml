@@ -1,21 +1,25 @@
 Image:
   RootVolume:
-    Size: 40
+    Size: 50
 Build:
   InstanceType: g4dn.8xlarge  # g4dn.8xlarge (x86_64), g5g.2xlarge (arm64), p3.2xlarge, c6g.2xlarge (arm64)
-  ParentImage: ami-0ebc92328d85f9f4c # first-stage-aws-parallelcluster-3.9.0-amzn2-hvm-x86_64-202402020743 2024-02-02T07-47-24.307Z
+#  ParentImage: ami-08c500d858682e96d # first-stage-aws-parallelcluster-3.10.0-amzn2-hvm-x86_64-202405230703 2024-05-23T07-07-10.372Z
+  ParentImage: ami-0d94353f7bad10668 # amzn2-ami-kernel-5.10-hvm-2.0.20240521.0-x86_64-gp2
   SecurityGroupIds:
-    - sg-0ae2798bd9c862add # DevWorkspaceVPC/SSH-Secure (IAD)
-  SubnetId: subnet-0147896c0e16103ae # DevWorkspaceVPC/IAD1/Public
+    - sg-0c27b2e51fcf979ca # DevWorkspaceVPC/SSH-Secure (IAD)
+  SubnetId: subnet-0fac92d92dee36e09 # DevWorkspaceVPC/IAD1/Public
+  Iam:
+    InstanceRole: arn:aws:iam::319414405305:role/pcluster-devinfra-us-east-1-admin-for-ec2
+    CleanupLambdaRole: arn:aws:iam::319414405305:role/pcluster-devinfra-us-east-1-admin-for-lambda
 DevSettings:
   Cookbook:
-    ChefCookbook: https://github.com/aws/aws-parallelcluster-cookbook/tarball/develop
+    ChefCookbook: https://github.com/gmarciani/aws-parallelcluster-cookbook/tarball/wip/mgiacomo/310/build-image
     ExtraChefAttributes: |
-      {"cluster": {"nvidia": {"enabled": "yes" }, "is_official_ami_build": "true"}}
-  NodePackage: https://github.com/aws/aws-parallelcluster-node/tarball/develop
-  AwsBatchCliPackage: https://github.com/aws/aws-parallelcluster/tarball/develop
+      {"cluster": {"nvidia": {"enabled": "yes" }, "is_official_ami_build": "true", "artifacts_build_url": "s3://aws-parallelcluster-dev-build-dependencies/archives/dependencies"}}
+#  NodePackage: https://github.com/aws/aws-parallelcluster-node/tarball/develop
+#  AwsBatchCliPackage: https://github.com/aws/aws-parallelcluster/tarball/develop
   DistributionConfiguration:
-    Regions: "us-east-1,eu-west-1"
+    Regions: "us-east-1"
 #    LaunchPermission: |
 #      { "UserIds": ["346106133209","499649255560","653949452088","298836457240","298836457240","538173551358","319414405305","366244450692","931086791537","375825564348","327582932671","858687455791","162389774010","331172880418","809139205235","190516475162","545611203268"] }
-  DisableValidateAndTest: True
+#  DisableValidateAndTest: True
