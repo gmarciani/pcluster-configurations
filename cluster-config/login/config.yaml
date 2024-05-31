@@ -45,3 +45,6 @@ Scheduling:
       Iam:
         AdditionalIamPolicies:
           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+DevSettings:
+  AmiSearchFilters:
+    Owner: "447714826191"
