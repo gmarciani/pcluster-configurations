@@ -3,7 +3,7 @@ provider "aws" {
   profile = var.profile
 }
 
-provider "aws-parallelcluster" {
+provider "pcluster" {
   region         = var.region
   profile        = var.profile
   api_stack_name = var.api_stack_name

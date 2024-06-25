@@ -1,6 +1,6 @@
 resource "random_uuid" "demo_id" {}
 
-resource "aws-parallelcluster_image" "demo_image" {
+resource "pcluster_image" "demo_image" {
   image_id            = var.image_id
   image_configuration = yamlencode({
     "Build":{
