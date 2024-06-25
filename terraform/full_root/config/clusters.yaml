@@ -1,0 +1,11 @@
+DemoCluster03:
+  region: ${region}
+  rollbackOnFailure: true
+  validationFailureLevel: WARNING
+  suppressValidators:
+    - type:KeyPairValidator
+  configuration: config/cluster-config.yaml
+DemoCluster04:
+  region: ${region}
+  rollbackOnFailure: false
+  configuration: config/cluster-config.yaml

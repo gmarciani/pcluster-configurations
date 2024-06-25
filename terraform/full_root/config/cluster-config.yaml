@@ -1,0 +1,28 @@
+Region: ${region}
+Image:
+ Os: alinux2
+HeadNode:
+ InstanceType: t3.small
+ Networking:
+   SubnetId: ${subnet}
+ Iam:
+   AdditionalIamPolicies:
+     - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+Scheduling:
+ Scheduler: slurm
+ SlurmQueues:
+   - Name: queue1
+     CapacityType: ONDEMAND
+     Networking:
+       SubnetIds:
+         - ${subnet}
+     Iam:
+       AdditionalIamPolicies:
+         - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+     ComputeResources:
+       - Name: compute
+         InstanceType: t3.small
+         MinCount: 1
+         MaxCount: 5
+ SlurmSettings:
+   QueueUpdateStrategy: TERMINATE
