@@ -1,3 +1,3 @@
 region = "us-east-1"
-api_stack_name = "ParallelCluster"
-api_version = "3.9.3"
+api_stack_name = "ParallelClusterAPI-3100"
+api_version = "3.10.0"
