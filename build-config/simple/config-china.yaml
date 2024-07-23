@@ -1,0 +1,18 @@
+Image:
+  Name: mg3101-custom-1
+  RootVolume:
+    Size: 50
+Build:
+  InstanceType: g4dn.8xlarge  # g4dn.8xlarge (x86_64), g5g.2xlarge (arm64), p3.2xlarge, c6g.2xlarge (arm64)
+  ParentImage: ami-0502e07d22109671a # amzn2-ami-kernel-5.10-hvm-2.0.20240620.0-x86_64-gp2
+#  SecurityGroupIds:
+#    - sg-0ae2798bd9c862add # DevWorkspaceVPC/SSH-Secure (IAD)
+#  SubnetId: subnet-0147896c0e16103ae # DevWorkspaceVPC/IAD1/Public
+  Iam:
+    CleanupLambdaRole: arn:aws-cn:iam::379811410880:role/pcluster-devinfra-cn-north-1-admin-for-lambda
+DevSettings:
+  Cookbook:
+    ChefCookbook: https://mgiacomo-tests-944895594011-cn-northwest-1.s3.cn-northwest-1.amazonaws.com.cn/pcluster-3.10.1/build-image/aws-aws-parallelcluster-cookbook-v3.10.0-2-ge49c25e.tar.gz
+    ExtraChefAttributes: |
+      {"cluster": {"nvidia": {"enabled": "yes" }, "is_official_ami_build": "true"}}
+  NodePackage: https://mgiacomo-tests-944895594011-cn-northwest-1.s3.cn-northwest-1.amazonaws.com.cn/pcluster-3.10.1/build-image/aws-aws-parallelcluster-node-v3.10.0-2-g9ed1de6.tar.gz

@@ -1,0 +1,24 @@
+Region: us-west-2
+Image:
+  Name: pcluster-3.9.2-refenv
+  Tags:
+    [{'Key': 'creator', 'Value': 'Siemens EDA Reference Environment for AWS'}, {'Key': 'job_name', 'Value': 'ParallelCluster-3.9.2-AMI-Build'}, {'Key': 'Version', 'Value': '3.9.2'}, {'Key': 'Date', 'Value': '2023.8.01'}, {'Key': 'refenv:version', 'Value': 'v0.3.7'}]
+  RootVolume:
+    Size: 40
+Build:
+  InstanceType: c7g.xlarge
+  ParentImage: ami-00707c56d2d151f5f  # aws-parallelcluster-3.9.2-rhel9-hvm-arm64-202405271558 2024-05-27T16-02-00.308Z
+  Iam:
+    CleanupLambdaRole: arn:aws:iam::319414405305:role/pcluster-devinfra-us-east-1-admin-for-lambda
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+#  Components:
+#    - Type: script
+#      Value: s3://ami-bucket-dslgug07/ami-configure.sh
+  Tags:
+    [{'Key': 'creator', 'Value': 'Siemens EDA Reference Environment for AWS'}, {'Key': 'job_name', 'Value': 'ParallelCluster-3.9.2-AMI-Build'}, {'Key': 'Version', 'Value': '3.9.2'}, {'Key': 'Date', 'Value': '2023.8.01'}, {'Key': 'refenv:version', 'Value': 'v0.3.7'}]
+  SubnetId: subnet-07f619072e5dc800b  # DevWorkspaceVPC/PDX1/Public
+  SecurityGroupIds:
+    - sg-09ab0873cd4c49937
+  UpdateOsPackages:
+    Enabled: true
