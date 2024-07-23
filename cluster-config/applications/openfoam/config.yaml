@@ -1,0 +1,49 @@
+Region: eu-west-1
+Image:
+  Os: alinux2023
+#  CustomAmi: ami-0186037db4ecfe8e7 # aws-parallelcluster-3.6.1-amzn2-hvm-x86_64-202306132359 2023-06-14T00-03-34.139Z
+HeadNode:
+  InstanceType: c5n.18xlarge
+  Networking:
+    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess # Required to read from bucket
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: q1
+      ComputeResources:
+        - Name: cr1
+          InstanceType: c5n.18xlarge
+          MinCount: 0
+          MaxCount: 32
+#          CapacityReservationTarget:
+#            CapacityReservationId: cr-067e890d2c06756b1
+          DisableSimultaneousMultithreading: true
+          Efa:
+            Enabled: true
+      Networking:
+        SubnetIds:
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+        PlacementGroup:
+          Enabled: true
+#          Id: pg-0fda6f912611d2210
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+SharedStorage:
+  - MountDir: /shared
+    Name: shared-fsx
+    StorageType: FsxLustre
+    FsxLustreSettings:
+      StorageCapacity: 2400
+      DeploymentType: PERSISTENT_1
+      AutomaticBackupRetentionDays: 30
+      DailyAutomaticBackupStartTime: 00:00
+      PerUnitStorageThroughput: 100
+      StorageType: SSD
