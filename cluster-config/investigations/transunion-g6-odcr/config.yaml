@@ -1,0 +1,122 @@
+Region: us-east-1
+Image:
+  Os: ubuntu2204
+HeadNode:
+  InstanceType: t2.medium
+  Networking:
+    SubnetId: subnet-0fac92d92dee36e09 # DevWorkspaceVPC/IAD1/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-60b85b09 # pl-60b85b09 - com.amazonaws.firewall.regional-corp-only (IAD)
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: g4-simple
+      ComputeResources:
+        - Name: cr1
+          InstanceType: g4dn.8xlarge
+          MinCount: 0
+          MaxCount: 2
+          Efa:
+            Enabled: true
+      Networking:
+        PlacementGroup:
+          Enabled: false
+        SubnetIds:
+          - subnet-00504214a4b53e9bf # DevWorkspaceVPC/IAD1/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+    - Name: g4-open
+      ComputeResources:
+        - Name: cr1
+          InstanceType: g4dn.8xlarge
+          MinCount: 0
+          MaxCount: 2
+          CapacityReservationTarget:
+            CapacityReservationId: cr-00093fb50e60745ca # g4dn.8xlarge open
+          Efa:
+            Enabled: true
+      Networking:
+        PlacementGroup:
+          Enabled: false
+        SubnetIds:
+          - subnet-00504214a4b53e9bf # DevWorkspaceVPC/IAD1/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+    - Name: g4-targeted
+      ComputeResources:
+        - Name: cr1
+          InstanceType: g4dn.8xlarge
+          MinCount: 0
+          MaxCount: 2
+          CapacityReservationTarget:
+            CapacityReservationId: cr-00cebced32334f3d2 # g4dn.8xlarge targeted
+          Efa:
+            Enabled: true
+      Networking:
+        PlacementGroup:
+          Enabled: true
+          Name: pcluster-g4dn-8xlarge-pg
+        SubnetIds:
+          - subnet-00504214a4b53e9bf # DevWorkspaceVPC/IAD1/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+    - Name: g6-simple
+      ComputeResources:
+        - Name: cr1
+          InstanceType: g6.12xlarge
+          MinCount: 0
+          MaxCount: 2
+          Efa:
+            Enabled: true
+      Networking:
+        PlacementGroup:
+          Enabled: false
+        SubnetIds:
+           - subnet-00504214a4b53e9bf # DevWorkspaceVPC/IAD1/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+    - Name: g6-open
+      ComputeResources:
+        - Name: cr1
+          InstanceType: g6.12xlarge
+          MinCount: 0
+          MaxCount: 2
+          CapacityReservationTarget:
+            CapacityReservationId: cr-0e9bd3bd4e30f8a2b # g6.12xlarge open
+          Efa:
+            Enabled: true
+      Networking:
+        PlacementGroup:
+          Enabled: false
+        SubnetIds:
+          - subnet-00504214a4b53e9bf # DevWorkspaceVPC/IAD1/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+    - Name: g6-targeted
+      ComputeResources:
+        - Name: cr1
+          InstanceType: g6.12xlarge
+          MinCount: 0
+          MaxCount: 2
+          CapacityReservationTarget:
+            CapacityReservationId: cr-0b9897ed55b114a9d # g6.12xlarge targeted
+          Efa:
+            Enabled: true
+      Networking:
+        PlacementGroup:
+          Enabled: true
+          Name: pcluster-g6-12xlarge-pg
+        SubnetIds:
+          - subnet-00504214a4b53e9bf # DevWorkspaceVPC/IAD1/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status

@@ -4,7 +4,7 @@ Image:
 HeadNode:
   InstanceType: g4dn.4xlarge
   Networking:
-    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
   Ssh:
     KeyName: mgiacomo
     AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
@@ -120,7 +120,7 @@ Scheduling:
           InstanceType: t2.medium
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - Name: q2
       CapacityType: ONDEMAND
       ComputeResources:
@@ -128,7 +128,7 @@ Scheduling:
           InstanceType: t2.medium
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
 SharedStorage:
   - MountDir: /shared
     Name: name1

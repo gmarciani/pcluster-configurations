@@ -2,26 +2,27 @@ Region: eu-west-1
 Image:
   Os: alinux2
 HeadNode:
-  InstanceType: g4dn.4xlarge  # g4dn.4xlarge, p3.2xlarge, c6g.xlarge
+  InstanceType: t3.medium
   Networking:
     SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
   Ssh:
     KeyName: mgiacomo
-    AllowedIps: pl-01a74268
+    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
   Iam:
     AdditionalIamPolicies:
       - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
-  Dcv:
-    Enabled: True
 Scheduling:
   Scheduler: slurm
   SlurmQueues:
     - Name: q1
       ComputeResources:
-        - Name: t2small
-          InstanceType: t2.small
-          MinCount: 0
-          MaxCount: 10
+        - Name: cr1
+          Instances:
+            - InstanceType: t3.large # r6g.medium
+            - InstanceType: c5.large # m6g.medium
+            - InstanceType: m5.large # c6g.medium
+          MinCount: 1
+          MaxCount: 5
       Networking:
         SubnetIds:
           - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private

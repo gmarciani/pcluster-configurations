@@ -1,0 +1,177 @@
+HeadNode:
+  DisableSimultaneousMultithreading: false
+  Imds:
+    Secured: true
+  InstanceType: c7i.2xlarge
+  LocalStorage:
+    RootVolume:
+      DeleteOnTermination: true
+      Encrypted: true
+      Iops: 3000
+      Size: 10000
+      Throughput: 125
+      VolumeType: gp3
+  Networking:
+    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+Image:
+  Os: ubuntu2004
+Imds:
+  ImdsSupport: v2.0
+Monitoring:
+  Dashboards:
+    CloudWatch:
+      Enabled: true
+  DetailedMonitoring: false
+  Logs:
+    CloudWatch:
+      DeletionPolicy: Retain
+      Enabled: true
+      RetentionInDays: 180
+    Rotation:
+      Enabled: true
+Region: eu-west-1
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - AllocationStrategy: lowest-price
+      CapacityType: SPOT
+      ComputeResources:
+        - DisableSimultaneousMultithreading: false
+          DynamicNodePriority: 1000
+          Efa:
+            Enabled: false
+            GdrSupport: false
+          Instances:
+            - InstanceType: c7i.48xlarge
+          MaxCount: 100
+          MinCount: 0
+          Name: c7i48
+          StaticNodePriority: 1
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+            Iops: 3000
+            Throughput: 125
+            VolumeType: gp3
+      JobExclusiveAllocation: false
+      Name: spot1
+      Networking:
+        PlacementGroup:
+          Enabled: false
+        SubnetIds:
+           - subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
+#          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+#          - subnet-04240bac0343bf912 # DevWorkspaceVPC/DUB4/Private
+#          - subnet-0cbf5eaa3a678e514 # DevWorkspaceVPC/DUB8/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+    - AllocationStrategy: lowest-price
+      CapacityType: SPOT
+      ComputeResources:
+        - DisableSimultaneousMultithreading: false
+          DynamicNodePriority: 1000
+          Efa:
+            Enabled: false
+            GdrSupport: false
+          Instances:
+            - InstanceType: c6i.32xlarge
+          MaxCount: 100
+          MinCount: 0
+          Name: c6i32
+          StaticNodePriority: 1
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+            Iops: 3000
+            Throughput: 125
+            VolumeType: gp3
+      JobExclusiveAllocation: false
+      Name: spot2
+      Networking:
+        PlacementGroup:
+          Enabled: false
+        SubnetIds:
+          - subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
+#          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+#          - subnet-04240bac0343bf912 # DevWorkspaceVPC/DUB4/Private
+#          - subnet-0cbf5eaa3a678e514 # DevWorkspaceVPC/DUB8/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+#    - AllocationStrategy: lowest-price
+#      CapacityType: SPOT
+#      ComputeResources:
+#          DisableSimultaneousMultithreading: false
+#          DynamicNodePriority: 1000
+#          Efa:
+#            Enabled: false
+#            GdrSupport: false
+#          Instances:
+#            - InstanceType: c7i.24xlarge
+#            - InstanceType: c6i.24xlarge
+#          MaxCount: 50
+#          MinCount: 0
+#          Name: c7-c6x24
+#          StaticNodePriority: 1
+#      ComputeSettings:
+#        LocalStorage:
+#          RootVolume:
+#            Encrypted: true
+#            Iops: 3000
+#            Throughput: 125
+#            VolumeType: gp3
+#      JobExclusiveAllocation: false
+#      Name: spot3
+#      Networking:
+#        PlacementGroup:
+#          Enabled: false
+#        SubnetIds:
+#          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+#          - subnet-04240bac0343bf912 # DevWorkspaceVPC/DUB4/Private
+#          - subnet-0cbf5eaa3a678e514 # DevWorkspaceVPC/DUB8/Private
+    - AllocationStrategy: lowest-price
+      CapacityType: ONDEMAND
+      ComputeResources:
+        - DisableSimultaneousMultithreading: false
+          DynamicNodePriority: 1000
+          Efa:
+            Enabled: false
+            GdrSupport: false
+          Instances:
+            - InstanceType: c7i.24xlarge
+          MaxCount: 40
+          MinCount: 0
+          Name: c7i24
+          StaticNodePriority: 1
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Encrypted: true
+            Iops: 3000
+            Throughput: 125
+            VolumeType: gp3
+      JobExclusiveAllocation: false
+      Name: ondemand1
+      Networking:
+        SubnetIds:
+          - subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
+#          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  SlurmSettings:
+    Dns:
+      DisableManagedDns: false
+      UseEc2Hostnames: false
+    EnableMemoryBasedScheduling: false
+    QueueUpdateStrategy: COMPUTE_FLEET_STOP
+    ScaledownIdletime: 10

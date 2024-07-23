@@ -2,7 +2,7 @@ Region: eu-west-1
 Image:
   Os: alinux2
 HeadNode:
-  InstanceType: g4dn.4xlarge  # g4dn.4xlarge, p3.2xlarge, c6g.xlarge
+  InstanceType: t3.micro
   Networking:
     SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
   Ssh:
@@ -10,21 +10,21 @@ HeadNode:
     AllowedIps: pl-01a74268
   Iam:
     AdditionalIamPolicies:
-      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
-  Dcv:
-    Enabled: True
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
 Scheduling:
   Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
   SlurmQueues:
     - Name: q1
       ComputeResources:
-        - Name: t2small
-          InstanceType: t2.small
-          MinCount: 0
-          MaxCount: 10
+        - Name: cr1
+          InstanceType: t3.micro
+          MinCount: 1
+          MaxCount: 2
       Networking:
         SubnetIds:
           - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
       Iam:
         AdditionalIamPolicies:
-          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore

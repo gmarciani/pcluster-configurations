@@ -5,7 +5,7 @@ CustomS3Bucket: mgiacomo-pcluster-custom-bucket
 HeadNode:
   InstanceType: t3.small
   Networking:
-    SubnetId: subnet-0f311877f669b5d23
+    SubnetId: subnet-0801d23d81c163aba
 #    AdditionalSecurityGroups:
 #      - sg-08305b8161617f2b5 # FSXOntap-Secure
 #      - sg-043e9fcaade8f85bb # FSXOpenZfs-Secure
@@ -30,7 +30,7 @@ LoginNodes:
       Count: 1
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
 #        AdditionalSecurityGroups:
 #          - sg-08305b8161617f2b5 # FSXOntap-Secure
 #          - sg-043e9fcaade8f85bb # FSXOpenZfs-Secure
@@ -57,7 +57,7 @@ Scheduling:
           MaxCount: 10
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
       Iam:
         AdditionalIamPolicies:
           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status

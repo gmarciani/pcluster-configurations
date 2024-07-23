@@ -2,14 +2,15 @@
 ACCOUNT="319414405305"
 REGION="us-east-1"
 AZS=(us-east-1c)
+#RESOURCE_GROUP_NAME="pcluster-g4dn-8xlarge-odcr"
 RESOURCE_GROUP_NAME="pcluster-g6-12xlarge-odcr"
-#RESOURCE_GROUP_NAME="pcluster-g4dn8xlarge-odcr"
 CR_TYPES=(open targeted)
-CR_INSTANCE_TYPE="g6.12xlarge"
 #CR_INSTANCE_TYPE="g4dn.8xlarge"
+CR_INSTANCE_TYPE="g6.12xlarge"
 INSTANCE_COUNT=2
+#PG_NAME="pcluster-g4dn-8xlarge-pg"
 PG_NAME="pcluster-g6-12xlarge-pg"
-#PG_NAME="pcluster-g4dn8xlarge-pg"
+
 
 RESOURCE_GROUP_ARN=$(
   aws resource-groups create-group \

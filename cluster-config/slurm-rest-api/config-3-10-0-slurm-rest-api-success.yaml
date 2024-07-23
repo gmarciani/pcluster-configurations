@@ -1,35 +1,45 @@
 Region: eu-west-1
 Image:
-  Os: alinux2
+  Os: ubuntu2204
 HeadNode:
-  InstanceType: t2.medium
+  InstanceType: m5.xlarge
+  Imds:
+    Secured: true
   Networking:
     SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
     AdditionalSecurityGroups:
       - sg-0aa3f6f1d68c6e53f
   Ssh:
     KeyName: mgiacomo
-    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+    AllowedIps: pl-01a74268
   Iam:
     AdditionalIamPolicies:
-      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      - Policy: arn:aws:iam::aws:policy/SecretsManagerReadWrite
+  CustomActions:
+    OnNodeConfigured:
+      Script: >-
+        https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/rest-api/postinstall.sh
 Scheduling:
   Scheduler: slurm
+  # ADDED by MGIACOMO
   SlurmSettings:
     Database:
       Uri: slurm-accounting-cluster.cluster-czkhokbphvly.eu-west-1.rds.amazonaws.com:3306
       UserName: clusteradmin
       PasswordSecretArn: arn:aws:secretsmanager:eu-west-1:319414405305:secret:AccountingClusterAdminSecre-E58sXOfNqmG4-cTasnA
+  # ADDED by MGIACOMO
   SlurmQueues:
-    - Name: q1
+    - Name: cpu
       ComputeResources:
-        - Name: t2small
-          InstanceType: t2.small
-          MinCount: 1
-          MaxCount: 5
+        - Name: c59xlarge
+          Instances:
+            - InstanceType: c5.9xlarge
+          MinCount: 0
+          MaxCount: 2
       Networking:
         SubnetIds:
           - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
       Iam:
         AdditionalIamPolicies:
-          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore

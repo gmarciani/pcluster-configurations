@@ -4,7 +4,7 @@ Image:
 HeadNode:
   InstanceType: t2.medium
   Networking:
-    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
   Ssh:
     KeyName: mgiacomo
     AllowedIps: pl-01a74268
@@ -16,14 +16,20 @@ HeadNode:
 Scheduling:
   Scheduler: awsbatch
   AwsBatchQueues:
-  - Name: queue0
+  - Name: q1
     ComputeResources:
-    - Name: queue0-i0
+    - Name: cr1
       InstanceTypes: 
-      - c5.large
-      MinvCpus: 1
-      DesiredvCpus: 1
+        - c5.large # 2 vcPUs
+      MinvCpus: 6
+      DesiredvCpus: 6
       MaxvCpus: 10
     Networking:
       SubnetIds:
-      - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+      - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+Tags:
+  - Key: owner
+    Value: giacomo-marciani
+#DevSettings:
+#  AmiSearchFilters:
+#    Owner: "447714826191"

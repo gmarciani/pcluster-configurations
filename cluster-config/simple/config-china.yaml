@@ -1,16 +1,17 @@
-Region: eu-west-1
+Region: cn-north-1
 Image:
   Os: alinux2
+  CustomAmi: ami-0906d10d0f5cb774c
 HeadNode:
   InstanceType: t3.medium
   Networking:
-    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
-  Ssh:
-    KeyName: mgiacomo
-    AllowedIps: pl-01a74268
+    SubnetId: subnet-0eccf7f7d197c6dc9 # DevWorkspaceVPC/BJS11/Private
+#  Ssh:
+#    KeyName: mgiacomo
+#    AllowedIps: pl-4eb55027
   Iam:
     AdditionalIamPolicies:
-      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      - Policy: arn:aws-cn:iam::aws:policy/AmazonSSMManagedInstanceCore
 Scheduling:
   Scheduler: slurm
   SlurmSettings:
@@ -24,10 +25,10 @@ Scheduling:
           MaxCount: 5
       Networking:
         SubnetIds:
-          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+          - subnet-065891c96a0f3ce25 # DevWorkspaceVPC/BJS11/Private
       Iam:
         AdditionalIamPolicies:
-          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+          - Policy: arn:aws-cn:iam::aws:policy/AmazonSSMManagedInstanceCore
 #SharedStorage:
 #  - MountDir: /opt/shared/fsxlustre/managed/1
 #    Name: shared-fsxlustre-managed-1

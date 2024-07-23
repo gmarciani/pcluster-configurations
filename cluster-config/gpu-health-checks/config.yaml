@@ -28,18 +28,19 @@ Scheduling:
       Iam:
         AdditionalIamPolicies:
           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
-SharedStorage:
-#   Managed EBS
-  - MountDir: /opt/shared/ebs/managed/1
-    Name: shared-ebs-managed-1
-    StorageType: Ebs
-    EbsSettings:
-      DeletionPolicy: Delete
+      HealthChecks:
+        Gpu:
+          Enabled: true
+#SharedStorage:
+#  - MountDir: /opt/shared/fsxlustre/managed/1
+#    Name: shared-fsxlustre-managed-1
+#    StorageType: FsxLustre
+#    FsxLustreSettings:
+#      StorageCapacity: 1200
+#      DeletionPolicy: Delete
 Tags:
   - Key: owner
     Value: giacomo-marciani
-DevSettings:
-  AmiSearchFilters:
-    Owner: "447714826191"
-  Cookbook:
-    ChefCookbook: s3://mgiacomo-workspace/parallelcluster/3.10.0/cookbooks/storage-perms/aws-parallelcluster-cookbook-3.10.0.tgz
+#DevSettings:
+#  AmiSearchFilters:
+#    Owner: "447714826191"

@@ -9,7 +9,7 @@ HeadNode:
       - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
   InstanceType: c5.xlarge
   Networking:
-    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
 Scheduling:
   Scheduler: slurm
   SlurmQueues:
@@ -29,7 +29,7 @@ Scheduling:
       Name: queue-0
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -46,7 +46,7 @@ Scheduling:
       Name: queue-1
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -63,7 +63,7 @@ Scheduling:
       Name: queue-2
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -80,7 +80,7 @@ Scheduling:
       Name: queue-3
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -97,7 +97,7 @@ Scheduling:
       Name: queue-4
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -114,7 +114,7 @@ Scheduling:
       Name: queue-5
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -131,7 +131,7 @@ Scheduling:
       Name: queue-6
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -148,7 +148,7 @@ Scheduling:
       Name: queue-7
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -165,7 +165,7 @@ Scheduling:
       Name: queue-8
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -182,7 +182,7 @@ Scheduling:
       Name: queue-9
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -199,7 +199,7 @@ Scheduling:
       Name: queue-10
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -216,7 +216,7 @@ Scheduling:
       Name: queue-11
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -233,7 +233,7 @@ Scheduling:
       Name: queue-12
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -250,7 +250,7 @@ Scheduling:
       Name: queue-13
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -267,7 +267,7 @@ Scheduling:
       Name: queue-14
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -284,7 +284,7 @@ Scheduling:
       Name: queue-15
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -301,7 +301,7 @@ Scheduling:
       Name: queue-16
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -318,7 +318,7 @@ Scheduling:
       Name: queue-17
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -335,7 +335,7 @@ Scheduling:
       Name: queue-18
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -352,7 +352,7 @@ Scheduling:
       Name: queue-19
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -369,7 +369,7 @@ Scheduling:
       Name: queue-20
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -386,7 +386,7 @@ Scheduling:
       Name: queue-21
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -403,7 +403,7 @@ Scheduling:
       Name: queue-22
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -420,7 +420,7 @@ Scheduling:
       Name: queue-23
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -437,7 +437,7 @@ Scheduling:
       Name: queue-24
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -454,7 +454,7 @@ Scheduling:
       Name: queue-25
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -471,7 +471,7 @@ Scheduling:
       Name: queue-26
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -488,7 +488,7 @@ Scheduling:
       Name: queue-27
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -505,7 +505,7 @@ Scheduling:
       Name: queue-28
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -522,7 +522,7 @@ Scheduling:
       Name: queue-29
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -539,7 +539,7 @@ Scheduling:
       Name: queue-30
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -556,7 +556,7 @@ Scheduling:
       Name: queue-31
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -573,7 +573,7 @@ Scheduling:
       Name: queue-32
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -590,7 +590,7 @@ Scheduling:
       Name: queue-33
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -607,7 +607,7 @@ Scheduling:
       Name: queue-34
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -624,7 +624,7 @@ Scheduling:
       Name: queue-35
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -641,7 +641,7 @@ Scheduling:
       Name: queue-36
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -658,7 +658,7 @@ Scheduling:
       Name: queue-37
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -675,7 +675,7 @@ Scheduling:
       Name: queue-38
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -692,7 +692,7 @@ Scheduling:
       Name: queue-39
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -709,7 +709,7 @@ Scheduling:
       Name: queue-40
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -726,7 +726,7 @@ Scheduling:
       Name: queue-41
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -743,7 +743,7 @@ Scheduling:
       Name: queue-42
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -760,7 +760,7 @@ Scheduling:
       Name: queue-43
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -777,7 +777,7 @@ Scheduling:
       Name: queue-44
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -794,7 +794,7 @@ Scheduling:
       Name: queue-45
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -811,7 +811,7 @@ Scheduling:
       Name: queue-46
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -828,7 +828,7 @@ Scheduling:
       Name: queue-47
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -845,7 +845,7 @@ Scheduling:
       Name: queue-48
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     - ComputeResources:
         - Instances:
             - InstanceType: c5.xlarge
@@ -862,7 +862,7 @@ Scheduling:
       Name: queue-49
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
 Tags:
   - Key: inside_configuration_key
     Value: overridden

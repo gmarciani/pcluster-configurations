@@ -1,0 +1,59 @@
+Imds:
+  ImdsSupport: v2.0
+HeadNode:
+  InstanceType: m6a.metal
+  Imds:
+    Secured: true
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-01a74268
+  LocalStorage:
+    RootVolume:
+      VolumeType: gp3
+      Size: 50
+  Networking:
+    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: compute
+      AllocationStrategy: lowest-price
+      ComputeResources:
+        - Name: compute-cr-0
+          Instances:
+            - InstanceType: m6a.metal
+          MinCount: 0
+          MaxCount: 10
+          DisableSimultaneousMultithreading: true
+          Efa:
+            Enabled: true
+            GdrSupport: true
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            VolumeType: gp3
+            Size: 50
+      Networking:
+        SubnetIds:
+          - subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
+        AssignPublicIp: true
+        PlacementGroup:
+          Enabled: true
+  SlurmSettings:
+    ScaledownIdletime: 1
+    QueueUpdateStrategy: COMPUTE_FLEET_STOP
+Region: eu-west-1
+Image:
+  Os: ubuntu2204
+SharedStorage:
+  - Name: Ebs0
+    StorageType: Ebs
+    MountDir: /shared
+#    EbsSettings:
+#      VolumeId: vol-0eaf83382b3dbc9b6
+Tags:
+  - Key: parallelcluster-ui
+    Value: 'true'

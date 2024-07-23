@@ -19,27 +19,18 @@ Scheduling:
     - Name: q1
       ComputeResources:
         - Name: cr1
-          InstanceType: t3.small
-          MinCount: 1
-          MaxCount: 5
+          Instances:
+            - InstanceType: hpc6a.48xlarge
+          MinCount: 32
+          MaxCount: 32
+          Efa:
+            Enabled: true
+          DisableSimultaneousMultithreading: true
       Networking:
         SubnetIds:
           - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
       Iam:
         AdditionalIamPolicies:
           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
-SharedStorage:
-#   Managed EBS
-  - MountDir: /opt/shared/ebs/managed/1
-    Name: shared-ebs-managed-1
-    StorageType: Ebs
-    EbsSettings:
-      DeletionPolicy: Delete
-Tags:
-  - Key: owner
-    Value: giacomo-marciani
 DevSettings:
-  AmiSearchFilters:
-    Owner: "447714826191"
-  Cookbook:
-    ChefCookbook: s3://mgiacomo-workspace/parallelcluster/3.10.0/cookbooks/storage-perms/aws-parallelcluster-cookbook-3.10.0.tgz
+  InstanceTypesData: '{"hpc6a.48xlarge": {"InstanceType":"hpc6a.48xlarge","SupportedUsageClasses":["on-demand"],"ProcessorInfo":{"SupportedArchitectures":["x86_64"]},"VCpuInfo":{"DefaultVCpus":96,"DefaultCores":96,"DefaultThreadsPerCore":1},"MemoryInfo":{"SizeInMiB":393216},"EbsInfo":{"EncryptionSupport":"supported"},"NetworkInfo":{"MaximumNetworkCards":1,"EfaSupported":true}, "PlacementGroupInfo":{"SupportedStrategies": ["cluster","partition","spread"]}}}'

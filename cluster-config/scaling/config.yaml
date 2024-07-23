@@ -1,31 +1,30 @@
 Region: eu-west-1
 Image:
   Os: alinux2
-  CustomAmi: ami-0e0cf3d543a824094  # aws-parallelcluster-3.9.0-amzn2-hvm-x86_64-202402290021 2024-02-29T00-25-22.679Z
 HeadNode:
   InstanceType: c5n.18xlarge
   Networking:
-    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
   Ssh:
     KeyName: mgiacomo
     AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
   Iam:
     AdditionalIamPolicies:
       - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
-LoginNodes:
-  Pools:
-    - Name: login
-      InstanceType: t3.small
-      Count: 10
-      Networking:
-        SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
-      Ssh:
-        KeyName: mgiacomo
-      Iam:
-        AdditionalIamPolicies:
-          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
-      GracetimePeriod: 5
+#LoginNodes:
+#  Pools:
+#    - Name: login
+#      InstanceType: t3.small
+#      Count: 10
+#      Networking:
+#        SubnetIds:
+#          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+#      Ssh:
+#        KeyName: mgiacomo
+#      Iam:
+#        AdditionalIamPolicies:
+#          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+#      GracetimePeriod: 5
 Scheduling:
   Scheduler: slurm
   SlurmSettings:
@@ -35,41 +34,335 @@ Scheduling:
     ComputeResources:
     - Name: cr1
       Instances:
-        - InstanceType: t3.micro
-      MinCount: 500
-      MaxCount: 500
+        - InstanceType: t3.small
+      MinCount: 0
+      MaxCount: 4000
+    - Name: cr2
+      Instances:
+        - InstanceType: t3.small
+      MinCount: 0
+      MaxCount: 4000
+    - Name: cr3
+      Instances:
+        - InstanceType: t3.small
+      MinCount: 0
+      MaxCount: 4000
+    - Name: cr4
+      Instances:
+        - InstanceType: t3.small
+      MinCount: 0
+      MaxCount: 4000
+    - Name: cr5
+      Instances:
+        - InstanceType: t3.small
+      MinCount: 0
+      MaxCount: 4000
     Networking:
       SubnetIds:
-        - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+        - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     Iam:
       AdditionalIamPolicies:
         - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
   - Name: q2
     ComputeResources:
-    - Name: cr1
-      Instances:
-        - InstanceType: t3.micro
-      MinCount: 500
-      MaxCount: 500
+      - Name: cr1
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr2
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr3
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr4
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr5
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
     Networking:
       SubnetIds:
-        - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+        - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     Iam:
       AdditionalIamPolicies:
         - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
   - Name: q3
     ComputeResources:
-    - Name: cr1
-      Instances:
-        - InstanceType: t3.micro
-      MinCount: 500
-      MaxCount: 500
+      - Name: cr1
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr2
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr3
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr4
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr5
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
     Networking:
       SubnetIds:
-        - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+        - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
     Iam:
       AdditionalIamPolicies:
         - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  - Name: q4
+    ComputeResources:
+      - Name: cr1
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr2
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr3
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr4
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr5
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+    Networking:
+      SubnetIds:
+        - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+    Iam:
+      AdditionalIamPolicies:
+        - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  - Name: q5
+    ComputeResources:
+      - Name: cr1
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr2
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr3
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr4
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr5
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+    Networking:
+      SubnetIds:
+        - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+    Iam:
+      AdditionalIamPolicies:
+        - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  - Name: q6
+    ComputeResources:
+      - Name: cr1
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr2
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr3
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr4
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr5
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+    Networking:
+      SubnetIds:
+        - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+    Iam:
+      AdditionalIamPolicies:
+        - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  - Name: q7
+    ComputeResources:
+      - Name: cr1
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr2
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr3
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr4
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr5
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+    Networking:
+      SubnetIds:
+        - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+    Iam:
+      AdditionalIamPolicies:
+        - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  - Name: q8
+    ComputeResources:
+      - Name: cr1
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr2
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr3
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr4
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr5
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+    Networking:
+      SubnetIds:
+        - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+    Iam:
+      AdditionalIamPolicies:
+        - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  - Name: q9
+    ComputeResources:
+      - Name: cr1
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr2
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr3
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr4
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr5
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+    Networking:
+      SubnetIds:
+        - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+    Iam:
+      AdditionalIamPolicies:
+        - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  - Name: q10
+    ComputeResources:
+      - Name: cr1
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr2
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr3
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr4
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+      - Name: cr5
+        Instances:
+          - InstanceType: t3.small
+        MinCount: 0
+        MaxCount: 4000
+    Networking:
+      SubnetIds:
+        - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+    Iam:
+      AdditionalIamPolicies:
+        - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+Tags:
+  - Key: owner
+    Value: giacomo-marciani
 DevSettings:
-  Cookbook:
-    ChefCookbook: s3://mgiacomo-workspace/parallelcluster/3.9.0/cookbooks/scaling/aws-parallelcluster-cookbook-3.9.0.tgz
+  AmiSearchFilters:
+    Owner: "447714826191"

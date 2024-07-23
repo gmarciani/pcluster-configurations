@@ -4,7 +4,7 @@ Image:
 HeadNode:
   InstanceType: t2.medium
   Networking:
-    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
   Ssh:
     KeyName: mgiacomo
     AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
@@ -24,7 +24,7 @@ Scheduling:
             CapacityReservationId: cr-077dd49c78ac91d19
       Networking:
         SubnetIds:
-           - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+           - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
       Iam:
         AdditionalIamPolicies:
           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
@@ -39,7 +39,7 @@ Scheduling:
             CapacityReservationResourceGroupArn: arn:aws:resource-groups:eu-west-1:319414405305:group/pcluster-adc-odcr-3
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
           - subnet-04cf1da8b777cd827 # DevWorkspaceVPC/DUB8/Private
       Iam:
         AdditionalIamPolicies:
@@ -72,7 +72,7 @@ Scheduling:
             CapacityReservationResourceGroupArn: arn:aws:resource-groups:eu-west-1:319414405305:group/pcluster-adc-odcr-3
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
           - subnet-04cf1da8b777cd827 # DevWorkspaceVPC/DUB8/Private
       Iam:
         AdditionalIamPolicies:

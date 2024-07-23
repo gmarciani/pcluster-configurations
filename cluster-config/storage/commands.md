@@ -2,6 +2,18 @@
 
 ## FSxLustre
 
+### Create File System
+Deployed in DevWorkspaceVPC/DUB2/Private with SG FSX-SEcure
+```
+aws fsx create-file-system \
+  --file-system-type LUSTRE \
+  --storage-capacity 1200 \
+  --storage-type SSD \
+  --subnet-id subnet-0119509eab22f8ed3 \
+  --security-groups sg-0e17136447904d938 \
+  --region eu-west-1
+```
+
 ### Root Squash
 
 To retrieve root squash configuration:

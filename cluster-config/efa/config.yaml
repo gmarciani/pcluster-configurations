@@ -4,7 +4,7 @@ Image:
 HeadNode:
   InstanceType: c5n.18xlarge
   Networking:
-    SubnetId: subnet-0f311877f669b5d23 # DevWorkspaceVPC/DUB2/Public
+    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
   Ssh:
     KeyName: mgiacomo
     AllowedIps: pl-01a74268
@@ -34,7 +34,7 @@ Scheduling:
             Enabled: true
       Networking:
         SubnetIds:
-          - subnet-058aeeb0d6bc887cb # DevWorkspaceVPC/DUB2/Private
+          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
         PlacementGroup:
           Enabled: true
       Iam:
