@@ -1,0 +1,27 @@
+Image:
+  Name: mg393-rocky9-x8664-1
+  RootVolume:
+    Size: 50
+Build:
+  InstanceType: g4dn.8xlarge  # g4dn.8xlarge (x86_64), g5g.2xlarge (arm64), p3.2xlarge, c6g.2xlarge (arm64)
+#  InstanceType: g5g.2xlarge  # g4dn.8xlarge (x86_64), g5g.2xlarge (arm64), p3.2xlarge, c6g.2xlarge (arm64)
+#  ParentImage: ami-0e001c9271cf7f3b9 # ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20240411
+  ParentImage: ami-021a1f96fec61f4e9  # Rocky-9-EC2-Base-9.3-20231113.0.x86_64
+#  ParentImage: ami-01c1aa264563c4eac  # Rocky-9-EC2-Base-9.3-20231113.0.aarch64
+#  ParentImage: ami-039bb043f0419a703 # aws-parallelcluster-3.9.2-ubuntu-2204-lts-hvm-x86_64-202405271558 2024-05-27T16-02-14.090Z
+#  SecurityGroupIds:
+#    - sg-0ae2798bd9c862add # DevWorkspaceVPC/SSH-Secure (IAD)
+#  SubnetId: subnet-0147896c0e16103ae # DevWorkspaceVPC/IAD1/Public
+  Iam:
+    CleanupLambdaRole: arn:aws:iam::319414405305:role/pcluster-devinfra-us-east-1-admin-for-lambda
+#DevSettings:
+#  Cookbook:
+#    ChefCookbook: https://github.com/gmarciani/aws-parallelcluster-cookbook/tarball/wip/mgiacomo/310/build-image
+#    ExtraChefAttributes: |
+#      {"cluster": {"nvidia": {"enabled": "yes" }, "is_official_ami_build": "true"}}
+#    ExtraChefAttributes: {"cluster": {"nvidia": {"enabled": "yes" }, "is_official_ami_build": "true", "artifacts_build_url": "s3://aws-parallelcluster-dev-build-dependencies/archives/dependencies"}}
+#  NodePackage: https://github.com/aws/aws-parallelcluster-node/tarball/develop
+#  AwsBatchCliPackage: https://github.com/aws/aws-parallelcluster/tarball/develop
+
+
+
