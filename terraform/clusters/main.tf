@@ -6,8 +6,8 @@ module "parallelcluster" {
   region                = var.region
   api_stack_name        = var.api_stack_name
   api_version           = var.api_version
-#  deploy_pcluster_api   = true
-  deploy_pcluster_api   = false
+  deploy_pcluster_api   = true
+#  deploy_pcluster_api   = false
   parameters = {
     EnableIamAdminAccess = "true"
   }
