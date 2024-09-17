@@ -1,10 +1,6 @@
 Region: eu-west-1
-#Region: us-east-1
 Image:
-#  Os: rhel9
-#  CustomAmi: ami-08cf8151737f113af
-  Os: rocky9
-  CustomAmi: ami-0cd1cae4b6c0819a2
+  Os: alinux2
 HeadNode:
   InstanceType: t3.medium
   Networking:
@@ -23,25 +19,15 @@ Scheduling:
     - Name: q1
       ComputeResources:
         - Name: cr1
-          InstanceType: t3.small
-          MinCount: 0
+          Instances:
+            - InstanceType: t3.small
+          MinCount: 1
           MaxCount: 5
       Networking:
         SubnetIds:
           - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+          - subnet-0f52b8cfca525fda2 # DevWorkspaceVPC/DUB4/Private
+          - subnet-06b628a385ef7df8a # DevWorkspaceVPC/DUB8/Private
       Iam:
         AdditionalIamPolicies:
           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
-#SharedStorage:
-#  - MountDir: /opt/shared/fsxlustre/managed/1
-#    Name: shared-fsxlustre-managed-1
-#    StorageType: FsxLustre
-#    FsxLustreSettings:
-#      StorageCapacity: 1200
-#      DeletionPolicy: Delete
-#Tags:
-#  - Key: owner
-#    Value: giacomo-marciani
-#DevSettings:
-#  AmiSearchFilters:
-#    Owner: "447714826191"

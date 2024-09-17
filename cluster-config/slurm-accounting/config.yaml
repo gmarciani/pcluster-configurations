@@ -1,15 +1,17 @@
-Region: eu-west-1
+Region: us-east-1
 Image:
   Os: alinux2
 HeadNode:
   InstanceType: t2.medium
   Networking:
-    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
+    SubnetId: subnet-09f90377c5d6dc03d # DevWorkspaceVPC/IAD1/Public
+#    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
     AdditionalSecurityGroups:
-      - sg-0aa3f6f1d68c6e53f
+      - sg-0bfffb058b6e22336
   Ssh:
     KeyName: mgiacomo
-    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+#    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+    AllowedIps: pl-60b85b09 # pl-60b85b09 - com.amazonaws.firewall.regional-corp-only (IAD)
   Iam:
     AdditionalIamPolicies:
       - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
@@ -17,9 +19,9 @@ Scheduling:
   Scheduler: slurm
   SlurmSettings:
     Database:
-      Uri: slurm-accounting-cluster.cluster-czkhokbphvly.eu-west-1.rds.amazonaws.com:3306
+      Uri: slurm-accounting-cluster.cluster-c1yheob1ikdf.us-east-1.rds.amazonaws.com:3306
       UserName: clusteradmin
-      PasswordSecretArn: arn:aws:secretsmanager:eu-west-1:319414405305:secret:AccountingClusterAdminSecre-E58sXOfNqmG4-cTasnA
+      PasswordSecretArn: arn:aws:secretsmanager:us-east-1:319414405305:secret:AccountingClusterAdminSecre-WlEDjnPBQiEN-v9FWnL
   SlurmQueues:
     - Name: q1
       ComputeResources:
@@ -29,7 +31,8 @@ Scheduling:
           MaxCount: 5
       Networking:
         SubnetIds:
-          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+#          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+          - subnet-0ecafb5ea72369193 # DevWorkspaceVPC/IAD1/Private
       Iam:
         AdditionalIamPolicies:
           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
