@@ -20,7 +20,7 @@ DevSettings:
     ExtraChefAttributes: |
       {"cluster": {"nvidia": {"enabled": "yes" }, "is_official_ami_build": "true"}}
 #    ExtraChefAttributes: {"cluster": {"nvidia": {"enabled": "yes" }, "is_official_ami_build": "true", "artifacts_build_url": "s3://aws-parallelcluster-dev-build-dependencies/archives/dependencies"}}
-#  NodePackage: https://github.com/aws/aws-parallelcluster-node/tarball/develop
+  NodePackage: https://github.com/aws/aws-parallelcluster-node/tarball/develop
 #  AwsBatchCliPackage: https://github.com/aws/aws-parallelcluster/tarball/develop
 
 
