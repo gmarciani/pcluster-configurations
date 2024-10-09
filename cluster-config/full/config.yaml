@@ -1,30 +1,45 @@
-Region: eu-west-1
+Region: us-east-1
 Image:
   Os: alinux2
-  CustomAmi: ami-00b77abc789121e1e
 HeadNode:
-  InstanceType: g4dn.4xlarge
+  InstanceType: t3.medium
   Networking:
-    SubnetId: subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
+    SubnetId: subnet-09f90377c5d6dc03d # DevWorkspaceVPC/IAD1/Public
+    AdditionalSecurityGroups:
+      - sg-09fe21fc2bd0149d4 # SLURM Accounting Client Security Group
   Ssh:
     KeyName: mgiacomo
-    AllowedIps: pl-01a74268 # pl-01a74268 - com.amazonaws.firewall.regional-corp-only (DUB)
+    AllowedIps: pl-60b85b09 # com.amazonaws.firewall.regional-corp-only (IAD)
   Iam:
     AdditionalIamPolicies:
       - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
-      - Policy: arn:aws:iam::319414405305:policy/DomainCertificateSecretReadPolicy-corp-mgiacomo-com # Required to read AD certificate
+      - Policy: arn:aws:iam::319414405305:policy/DomainCertificateSecretReadPolicy-ad # Required to read AD certificate
+      - Policy: arn:aws:iam::319414405305:policy/mgiacomo-test-policy # Just for testing the attachment of custom policies.
     S3Access:
       - BucketName: mgiacomo-workspace
         EnableWriteAccess: false
-        KeyName: MGIACOMO-AWSParallelCluster/cluster-config/active-directory/ad.head.post.sh
+        KeyName: '*'
   CustomActions:
+    OnNodeStart:
+      Sequence:
+       - Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/full/Head-OnNodeStart.sh
     OnNodeConfigured:
-      Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/active-directory/ad.head.post.sh
-      Args:
-        - arn:aws:secretsmanager:eu-west-1:319414405305:secret:DomainCertificateSecret-corp-mgiacomo-com-2YKKMP
-        - /opt/parallelcluster/shared/directory_service/domain-certificate.crt
+      Sequence:
+        - Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/full/Head-OnNodeConfigured.sh
+        - Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/full/Head-OnNodeConfigured-ActiveDirectory.sh
+          Args:
+            - arn:aws:secretsmanager:eu-west-1:319414405305:secret:DomainCertificateSecret-corp-mgiacomo-com-2YKKMP
+            - /opt/parallelcluster/shared/directory_service/domain-certificate.crt
+    OnNodeUpdated:
+      Sequence:
+        - Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/full/Head-OnNodeUpdated.sh
 Scheduling:
   Scheduler: slurm
+  SlurmSettings:
+    Database:
+      Uri: slurm-accounting-cluster.cluster-c1yheob1ikdf.us-east-1.rds.amazonaws.com:3306
+      UserName: clusteradmin
+      PasswordSecretArn: arn:aws:secretsmanager:us-east-1:319414405305:secret:AccountingClusterAdminSecre-6jvN9uz8e2UF-M3qlkj
   SlurmQueues:
     - Name: q1
       ComputeResources:
@@ -37,62 +52,103 @@ Scheduling:
             Enabled: true
       Networking:
         SubnetIds:
-          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+          - subnet-0ecafb5ea72369193 # DevWorkspaceVPC/IAD1/Private
         PlacementGroup:
           Enabled: true
       Iam:
         AdditionalIamPolicies:
           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
-    - Name: q2
-      ComputeResources:
-        - Name: g4dn4xl
-          InstanceType: g4dn.4xlarge
-          MinCount: 1
-          MaxCount: 5
+          - Policy: arn:aws:iam::319414405305:policy/mgiacomo-test-policy # Just for testing the attachment of custom policies.
+        S3Access:
+          - BucketName: mgiacomo-workspace
+            EnableWriteAccess: false
+            KeyName: '*'
+      CustomActions:
+        OnNodeStart:
+          Sequence:
+            - Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/full/Compute-OnNodeStart.sh
+        OnNodeConfigured:
+          Sequence:
+            - Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/full/Compute-OnNodeConfigured.sh
+#        OnNodeUpdated:
+#          Sequence:
+#            - Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/full/Compute-OnNodeUpdated.sh
+
+LoginNodes:
+  Pools:
+    - Name: login
+      InstanceType: t3.small
+      Count: 1
       Networking:
         SubnetIds:
-          - subnet-0119509eab22f8ed3 # DevWorkspaceVPC/DUB2/Private
+          - subnet-09f90377c5d6dc03d # DevWorkspaceVPC/IAD1/Public
+      Ssh:
+        KeyName: mgiacomo
       Iam:
         AdditionalIamPolicies:
           - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      GracetimePeriod: 3
+      CustomActions:
+        OnNodeStart:
+          Sequence:
+            - Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/full/Login-OnNodeStart.sh
+        OnNodeConfigured:
+          Sequence:
+            - Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/full/Login-OnNodeConfigured.sh
+        OnNodeUpdated:
+          Sequence:
+            - Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/full/Login-OnNodeUpdated.sh
+
 DirectoryService:
   DomainName: corp.mgiacomo.com
   DomainAddr: ldaps://corp.mgiacomo.com
-  PasswordSecretArn: arn:aws:secretsmanager:eu-west-1:319414405305:secret:PasswordSecret-corp-mgiacomo-com-kZrYpP
+  PasswordSecretArn: arn:aws:secretsmanager:us-east-1:319414405305:secret:PasswordSecret-ad-waxqk4
   DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=mgiacomo,dc=com
   LdapTlsCaCert: /opt/parallelcluster/shared/directory_service/domain-certificate.crt
   LdapTlsReqCert: hard
-#  LdapAccessFilter: "!(CN=UserTeamO*)"
-#  LdapAccessFilter: (|(memberOf=CN=TeamTwo,OU=Users,OU=CORP,DC=corp,DC=mgiacomo,DC=com)(memberOf=CN=TeamThree,OU=Users,OU=CORP,DC=corp,DC=mgiacomo,DC=com))
-#  LdapAccessFilter: memberOf=CN=EngineeringTeam,OU=Users,OU=CORP,DC=corp,DC=mgiacomo,DC=com
   AdditionalSssdConfigs:
     debug_level: "0xFFF0"
     cache_credentials: False
 
 SharedStorage:
-  - MountDir: /opt/mgiacomo/shared/ebs/managed/1
-    Name: mgiacomo-shared-ebs-managed-1
+  - MountDir: /shared/ebs-managed-1
+    Name: shared-ebs-managed-1
     StorageType: Ebs
-#  - MountDir: /opt/mgiacomo/shared/ebs/external/1
-#    Name: mgiacomo-shared-ebs-external-1
-#    StorageType: Ebs
-#    EbsSettings:
-#      VolumeId: vol-08498724704bd5051
-  - MountDir: /opt/mgiacomo/shared/efs/managed/1
-    Name: mgiacomo-shared-efs-managed-1
+  - MountDir: /shared/ebs-external-1
+    Name: shared-ebs-external-1
+    StorageType: Ebs
+    EbsSettings:
+      VolumeId: vol-0042e83568074e4fc
+  - MountDir: /shared/efs-managed-1
+    Name: shared-efs-managed-1
     StorageType: Efs
-#  - MountDir: /opt/mgiacomo/shared/efs/external/1
-#    Name: mgiacomo-shared-efs-external-1
-#    StorageType: Efs
-#    EfsSettings:
-#      FileSystemId: fs-0f6cc35ff62ab5bff
-  - MountDir: /opt/mgiacomo/shared/fsx/managed/1
-    Name: mgiacomo-shared-fsx-managed-1
+  - MountDir: /shared/efs-external-1
+    Name: shared-efs-external-1
+    StorageType: Efs
+    EfsSettings:
+      FileSystemId: fs-0060570abd15a4ac1
+  - MountDir: /shared/fsxl-managed-1
+    Name: shared-fsxl-managed-1
     StorageType: FsxLustre
     FsxLustreSettings:
       StorageCapacity: 1200
-#  - MountDir: /opt/mgiacomo/shared/fsx/external/1
-#    Name: mgiacomo-shared-fsx-external-1
-#    StorageType: FsxLustre
-#    FsxLustreSettings:
-#      FileSystemId: fs-0bc6f5b1f3a877a83
+  - MountDir: /shared/fsxl-external-1
+    Name: shared-fsxl-external-1
+    StorageType: FsxLustre
+    FsxLustreSettings:
+      FileSystemId: fs-0f15e1d2ec6772966
+  - MountDir: /shared/filecache-external-1
+    Name: shared-file-cache-external-1
+    StorageType: FileCache
+    FileCacheSettings:
+      FileCacheId: fc-006a7919acba2532b
+  - MountDir: /shared/fsxontap-external-1
+    Name: shared-fsxontap-external-1
+    StorageType: FsxOntap
+    FsxOntapSettings:
+      VolumeId: fsvol-09f264e87934375f4
+  - MountDir: /shared/fsxopenzfs-external-1
+    Name: shared-fsxopenzfs-external-1
+    StorageType: FsxOpenZfs
+    FsxOpenZfsSettings:
+      VolumeId: fsvol-083b6e35ceedee274
