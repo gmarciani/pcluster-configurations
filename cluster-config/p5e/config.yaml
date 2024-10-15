@@ -1,0 +1,76 @@
+Region: us-east-2
+Image:
+  Os: alinux2
+HeadNode:
+  InstanceType: c5.2xlarge
+  Networking:
+    SubnetId: subnet-027a6d579f5b211fc # ParallelClusterUse2Az3PublicSubnet
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-3ea44157 # com.amazonaws.firewall.regional-corp-only
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+  SlurmQueues:
+    - Name: q1
+      CapacityType: CAPACITY_BLOCK
+      ComputeResources:
+        - Name: cr1
+          InstanceType: p5e.48xlarge
+          MinCount: 2
+          MaxCount: 2
+          DisableSimultaneousMultithreading: true
+          Efa:
+            Enabled: true
+      CapacityReservationTarget:
+        CapacityReservationId: cr-0ab0d7199255b77ea
+      Networking:
+        SubnetIds:
+          - subnet-090e8cb5e1afde483 # ParallelClusterUse2Az3PrivateSubnet
+        PlacementGroup:
+          Enabled: false
+      #        PlacementGroup:
+      #          Id: pg-06bd314c3c3fb4ec0
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+SharedStorage:
+  - MountDir: /shared
+    Name: shared-ebs
+    StorageType: Ebs
+    EbsSettings:
+      DeletionPolicy: Delete
+      Size: 100
+#  - MountDir: /shared-efs
+#    Name: shared-efs-managed-1
+#    StorageType: Efs
+#    EfsSettings:
+#      DeletionPolicy: Delete
+#  - MountDir: /shared-fsxl
+#    Name: shared-fsxlustre-managed-1
+#    StorageType: FsxLustre
+#    FsxLustreSettings:
+#      StorageCapacity: 1200
+#      DeletionPolicy: Delete
+DirectoryService:
+  DomainName: corp.mgiacomo.com
+  DomainAddr: ldap://192.168.109.27,ldap://192.168.127.246
+  PasswordSecretArn: arn:aws:secretsmanager:us-east-2:447714826191:secret:PasswordSecret-mgiacomo-ad3-VyZapw
+  DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=mgiacomo,dc=com
+  LdapTlsReqCert: never
+  AdditionalSssdConfigs:
+    debug_level: "0xFFF0"
+    cache_credentials: False
+    ldap_auth_disable_tls_never_use_in_production: True
+Tags:
+  - Key: scope
+    Value: mgiacomo-test-p5e
+DevSettings:
+  AmiSearchFilters:
+    Owner: "447714826191"
