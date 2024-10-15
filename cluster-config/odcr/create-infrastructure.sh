@@ -1,14 +1,14 @@
 # Constants (replace with your values)
 ACCOUNT="319414405305"
 REGION="us-east-1"
-AZS=(us-east-1c)
-RESOURCE_GROUP_NAME="pcluster-g6-12xlarge-odcr"
+AZS=(us-east-1b)
+RESOURCE_GROUP_NAME="pcluster-odcr-c5xl"
 #RESOURCE_GROUP_NAME="pcluster-g4dn8xlarge-odcr"
 CR_TYPES=(open targeted)
-CR_INSTANCE_TYPE="g6.12xlarge"
+CR_INSTANCE_TYPE="c5.xlarge"
 #CR_INSTANCE_TYPE="g4dn.8xlarge"
-INSTANCE_COUNT=2
-PG_NAME="pcluster-g6-12xlarge-pg"
+INSTANCE_COUNT=4
+PG_NAME="pcluster-c5-xlarge-pg"
 #PG_NAME="pcluster-g4dn8xlarge-pg"
 
 RESOURCE_GROUP_ARN=$(
