@@ -1,0 +1,15 @@
+Image:
+  Name: mg-pcui-test-20241008-1
+  RootVolume:
+    Size: 50
+Build:
+  InstanceType: g4dn.8xlarge  # g4dn.8xlarge (x86_64), g5g.2xlarge (arm64), p3.2xlarge, c6g.2xlarge (arm64)
+  ParentImage: ami-08d09cd56a9dbed8a # aws-parallelcluster-3.11.0-amzn2-hvm-x86_64-202409211650 2024-09-21T16-54-15.847Z
+#  SecurityGroupIds:
+#    - sg-0ae2798bd9c862add # DevWorkspaceVPC/SSH-Secure (IAD)
+#  SubnetId: subnet-0147896c0e16103ae # DevWorkspaceVPC/IAD1/Public
+  Iam:
+    CleanupLambdaRole: arn:aws:iam::319414405305:role/pcluster-devinfra-us-east-1-admin-for-lambda
+
+
+
