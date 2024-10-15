@@ -17,14 +17,38 @@ HeadNode:
         KeyName: "*"
   CustomActions:
     OnNodeStart:
-      Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/Head-OnNodeStart.sh
+      Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/custom-actions/Head-OnNodeStart.sh
     OnNodeConfigured:
-      Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/Head-OnNodeConfigured.sh
+      Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/custom-actions/Head-OnNodeConfigured.sh
     OnNodeUpdated:
-#      Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/Head-OnNodeUpdated.sh
-      Sequence:
-        - Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/Head-OnNodeUpdated.sh
-        - Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/Head-OnNodeUpdated.sh
+      Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/custom-actions/Head-OnNodeUpdated.sh
+LoginNodes:
+  Pools:
+    - Name: login
+      InstanceType: t3.small
+      Count: 1
+      Networking:
+        SubnetIds:
+          - subnet-0801d23d81c163aba # DevWorkspaceVPC/DUB2/Public
+      Ssh:
+        KeyName: mgiacomo
+        AllowedIps: pl-01a74268
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess # Required to report patching status
+#        S3Access:
+#          - BucketName: mgiacomo-workspace
+#            EnableWriteAccess: false
+#            KeyName: "*"
+      GracetimePeriod: 3
+      CustomActions:
+        OnNodeStart:
+          Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/custom-actions/Login-OnNodeStart.sh
+        OnNodeConfigured:
+          Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/custom-actions/Login-OnNodeConfigured.sh
+        OnNodeUpdated:
+          Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/custom-actions/Login-OnNodeUpdated.sh
 Scheduling:
   Scheduler: slurm
   SlurmSettings:
@@ -48,18 +72,14 @@ Scheduling:
             KeyName: "*"
       CustomActions:
         OnNodeStart:
-#          Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/Compute-OnNodeStart.sh
-          Sequence:
-            - Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/Compute-OnNodeStart.sh
-            - Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/Compute-OnNodeStart.sh
+          Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/custom-actions/Compute-OnNodeStart.sh
         OnNodeConfigured:
-#          Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/Compute-OnNodeConfigured.sh
-          Sequence:
-            - Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/Compute-OnNodeConfigured.sh
-            - Script: s3://mgiacomo-workspace/MGIACOMO-AWSParallelCluster/cluster-config/custom-actions/Compute-OnNodeConfigured.sh
+          Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/custom-actions/Compute-OnNodeConfigured.sh
+#        OnNodeUpdated:
+#          Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/custom-actions/Compute-OnNodeUpdated.sh
 Tags:
   - Key: owner
     Value: giacomo-marciani
-#DevSettings:
-#  AmiSearchFilters:
-#    Owner: "447714826191"
+DevSettings:
+  AmiSearchFilters:
+    Owner: "447714826191"

@@ -1,0 +1,46 @@
+Region: us-east-1
+Image:
+  Os: alinux2
+  CustomAmi: ami-0cf929c2ad9e2cf84  # mg-3111-pyxis-21 2024-10-15T11-02-37.568Z
+HeadNode:
+  InstanceType: t3.medium
+  Networking:
+    SubnetId: subnet-09f90377c5d6dc03d # DevWorkspaceVPC/IAD1/Public
+  Ssh:
+    KeyName: mgiacomo
+    AllowedIps: pl-60b85b09 # pl-60b85b09 - com.amazonaws.firewall.regional-corp-only
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+    S3Access:
+      - BucketName: mgiacomo-workspace
+        EnableWriteAccess: false
+        KeyName: "*"
+  CustomActions:
+    OnNodeConfigured:
+      Script: s3://mgiacomo-workspace/pcluster-configurations/cluster-config/pyxis/Head-OnNodeConfigured.sh
+  SharedStorageType: Efs
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+  SlurmQueues:
+    - Name: q1
+      ComputeResources:
+        - Name: cr1
+          InstanceType: t3.small
+          MinCount: 1
+          MaxCount: 5
+      Networking:
+        SubnetIds:
+          - subnet-0ecafb5ea72369193 # DevWorkspaceVPC/IAD1/Private
+      Iam:
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore # Required to report patching status
+          - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+DevSettings:
+  AmiSearchFilters:
+    Owner: "self"
+  Cookbook:
+    ChefCookbook: s3://aws-parallelcluster-devinfra-319414405305-us-east-1/parallelcluster/3.11.1/cookbooks/pyxis/aws-parallelcluster-cookbook-3.11.1.tgz

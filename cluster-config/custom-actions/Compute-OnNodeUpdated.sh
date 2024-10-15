@@ -1,4 +1,5 @@
 #!/bin/bash
 set -e
 
-sudo touch /Compute-OnNodeUpdated.sh.txt
+echo "Executing $0"
+sudo touch "/$(basename "$0").txt"

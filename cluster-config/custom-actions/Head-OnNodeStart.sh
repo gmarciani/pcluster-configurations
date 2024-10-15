@@ -1,4 +1,5 @@
 #!/bin/bash
 set -e
 
-sudo touch /head-on-node-start.txt
+echo "Executing $0"
+sudo touch "/$(basename "$0").txt"
